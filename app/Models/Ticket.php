@@ -1,29 +1,33 @@
 <?php
 
 namespace App\Models;
+use Illuminate\Database\Eloquent\SoftDeletes;
+
 
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Ticket extends Model
 {
+    //
+      use SoftDeletes;
+
     protected $fillable = [
         'ticket_number',
+        'user_id',
         'category',
         'priority',
         'site_link',
-        'faculty_name',
-        'email',
+        'faculty_id',
         'attachment',
         'status',
         'description',
+        'resolved_at',
     ];
 
-    public function assignment()
+    public function user()
     {
-        return $this->hasOne(TicketAssignment::class)->latestOfMany();
+        return $this->belongsTo(User::class);
     }
-
 
     public function faculty()
     {
