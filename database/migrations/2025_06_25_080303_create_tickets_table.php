@@ -16,7 +16,7 @@ return new class extends Migration
             $table->string('ticket_number')->unique();
 
             // Jika kamu tidak menggunakan Auth::user(), maka kolom user_id bisa dihapus.
-            // $table->foreignId('user_id')->nullable()->constrained()->onDelete('cascade');
+            $table->foreignId('user_id')->nullable()->constrained()->onDelete('cascade');
 
             $table->enum('category', [
                 'konten_tidak_pantas',
@@ -30,9 +30,9 @@ return new class extends Migration
             $table->string('site_link')->nullable();
 
             // Ganti faculty_id menjadi manual input: faculty_name / okupasi
-            $table->string('faculty_name');
+            $table->foreignId('faculty_id')->constrained()->onDelete('cascade');
 
-            $table->string('email');
+            $table->string('email')->nullable();
             $table->string('attachment')->nullable();
             $table->enum('status', ['submitted', 'in_progress', 'done', 'rejected'])->default('submitted');
             $table->text('description')->nullable();

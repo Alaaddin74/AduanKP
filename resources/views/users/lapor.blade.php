@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <title>Layanan Laporan</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  
+
   <!-- Bootstrap & Icons -->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
@@ -96,7 +96,7 @@
   <h4>Situs Laporan</h4>
   <p>{{ strtoupper(Auth::user()->name ?? 'Pengguna Umum') }}</p>
   <p class="small text-muted">{{ Auth::user()->email ?? 'Tidak Login' }}</p>
-  <a href="{{ route('dashboard') }}"><i class="bi bi-house"></i> Dashboard</a>
+  <a href="{{ route('user.dashboard') }}"><i class="bi bi-house"></i> Dashboard</a>
   <a href="{{ route('lapor.create') }}"><i class="bi bi-plus-circle"></i> Buat Ticket</a>
 </div>
 
@@ -138,7 +138,6 @@
         @foreach($faculties as $fakultas)
           <option value="{{ $fakultas->name }}">{{ $fakultas->name }}</option>
         @endforeach
-        <option value="lainnya">Lainnya</option>
       </select>
 
       <!-- Input Okupasi Lainnya (optional) -->
@@ -146,7 +145,7 @@
 
       <!-- Email -->
       <label for="email">Email</label>
-      <input type="email" name="email" id="email" required>
+      <input type="email" name="email" id="email">
 
       <!-- Lampiran -->
       <div class="lampiran">
@@ -159,7 +158,7 @@
 
       <!-- Tombol -->
       <div class="d-flex justify-content-between mt-4">
-        <a href="{{ route('dashboard') }}" class="btn-back">← Kembali ke Dashboard</a>
+        <a href="{{ route('user.dashboard') }}" class="btn-back">← Kembali ke Dashboard</a>
         <button type="submit" class="btn-submit">Lapor!</button>
       </div>
     </form>
@@ -184,16 +183,16 @@
   });
 
   // Toggle input manual jika pilih "lainnya"
-  function toggleLainnyaBox(value) {
-    const lainnyaInput = document.getElementById('okupasi_lainnya');
-    if (value === 'lainnya') {
-      lainnyaInput.classList.remove('d-none');
-      lainnyaInput.required = true;
-    } else {
-      lainnyaInput.classList.add('d-none');
-      lainnyaInput.required = false;
-    }
-  }
+//   function toggleLainnyaBox(value) {
+//     const lainnyaInput = document.getElementById('okupasi_lainnya');
+//     if (value === 'lainnya') {
+//       lainnyaInput.classList.remove('d-none');
+//       lainnyaInput.required = true;
+//     } else {
+//       lainnyaInput.classList.add('d-none');
+//       lainnyaInput.required = false;
+//     }
+//   }
 </script>
 
 </body>

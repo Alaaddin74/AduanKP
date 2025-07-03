@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <title>Dashboard Pengguna</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    
+
     <!-- Bootstrap & Icons -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
@@ -38,7 +38,7 @@
     <h4>Situs Laporan</h4>
     <p>{{ strtoupper(Auth::user()->name ?? 'Pengguna Umum') }}</p>
     <p class="small text-muted">{{ Auth::user()->email ?? 'Tidak Login' }}</p>
-    <a href="{{ route('dashboard') }}"><i class="bi bi-house"></i> Dashboard</a>
+    <a href="{{ route('user.dashboard') }}"><i class="bi bi-house"></i> Dashboard</a>
     <a href="{{ route('lapor.create') }}"><i class="bi bi-plus-circle"></i> Buat Ticket</a>
 </div>
 

@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Models;
+
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 
@@ -9,7 +10,7 @@ use Illuminate\Database\Eloquent\Model;
 class Ticket extends Model
 {
     //
-      use SoftDeletes;
+    use SoftDeletes;
 
     protected $fillable = [
         'ticket_number',
@@ -23,6 +24,17 @@ class Ticket extends Model
         'description',
         'resolved_at',
     ];
+
+    // In app/Models/Ticket.php
+    public function assignment()
+    {
+        return $this->hasOne(TicketAssignment::class);
+    }
+
+    public function assignedTo()
+    {
+        return $this->hasOneThrough(User::class, TicketAssignment::class, 'ticket_id', 'id', 'id', 'assigned_to');
+    }
 
     public function user()
     {

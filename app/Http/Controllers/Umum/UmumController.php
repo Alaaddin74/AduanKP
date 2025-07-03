@@ -59,12 +59,12 @@ class UmumController extends Controller
         ]);
 
         // Jika pilih "lainnya", gunakan input manual
-        $facultyName = $request->okupasi;
-        if ($facultyName === 'lainnya') {
+        $faculty_id = $request->okupasi;
+        if ($faculty_id === 'lainnya') {
             $request->validate([
                 'okupasi_lainnya' => 'required|string|max:255',
             ]);
-            $facultyName = $request->okupasi_lainnya;
+            $faculty_id = $request->okupasi_lainnya;
         }
 
         // Upload lampiran jika tersedia
@@ -79,15 +79,15 @@ class UmumController extends Controller
             'category'      => $request->keluhan,
             'priority'      => $request->prioritas,
             'site_link'     => $request->link,
-            'faculty_name'  => $facultyName,
+            'faculty_id'  => $faculty_id,
             'email'         => $request->email,
             'attachment'    => $lampiranPath,
             'status'        => 'submitted',
             'description'   => 'Laporan pengguna umum',
         ]);
 
-        return redirect()->route('dashboard', ['email' => $request->email])
-                         ->with('success', 'Laporan berhasil dikirim!');
+        return redirect()->route('user.dashboard')
+            ->with('success', 'Laporan berhasil dikirim!');
     }
 
     /**
@@ -104,7 +104,7 @@ class UmumController extends Controller
 
         $ticket->delete();
 
-        return redirect()->route('dashboard', ['email' => $ticket->email])
-                         ->with('success', 'Tiket berhasil dihapus.');
+        return redirect()->route('user.dashboard', ['email' => $ticket->email])
+            ->with('success', 'Tiket berhasil dihapus.');
     }
 }
