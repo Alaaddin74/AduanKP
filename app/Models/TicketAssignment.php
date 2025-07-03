@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class TicketAssignment extends Model
 {
@@ -17,17 +18,22 @@ class TicketAssignment extends Model
         'note',
     ];
 
-    public function ticket()
+    protected $casts = [
+        'assigned_at' => 'datetime',
+        'finished_at' => 'datetime',
+    ];
+
+    public function ticket(): BelongsTo
     {
         return $this->belongsTo(Ticket::class);
     }
 
-    public function assignedBy()
+    public function assignedBy(): BelongsTo
     {
         return $this->belongsTo(User::class, 'assigned_by');
     }
 
-    public function assignedTo()
+    public function assignedTo(): BelongsTo
     {
         return $this->belongsTo(User::class, 'assigned_to');
     }
