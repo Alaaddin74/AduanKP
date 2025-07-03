@@ -22,6 +22,7 @@ class FacultySeeder extends Seeder
             'FK',
             'Hukum',
             'Pascasarjana',
+            'Pengguna Umum'
         ];
 
         foreach ($faculties as $name) {
