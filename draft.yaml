@@ -1,0 +1,41 @@
+models:
+  Ticket:
+    ticket_number: string
+    user_id: id foreign:users
+    category: enum:konten_tidak_pantas,menghapus_index,lainnya
+    priority: enum:low,medium,high
+    site_link: string nullable
+    faculty_id: id foreign
+    attachment: string nullable
+    status: enum:submitted,in_progress,done,rejected default:submitted
+    deleted_at: timestamp nullable
+    description: text nullable
+    resolved_at: timestamp nullable
+    relationships:
+      hasMany: TicketAssignment
+      belongsTo: Faculty, User
+    indexes:
+      - index: ticket_number, status
+      - unique: ticket_number
+
+  TicketAssignment:
+    ticket_id: id foreign
+    assigned_by: id foreign:users
+    assigned_to: id foreign:users
+    assigned_at: timestamp
+    finished_at: timestamp nullable
+    result: enum:done,rejected nullable
+    note: text nullable
+    relationships:
+      belongsTo: Ticket, User
+
+  Faculty:
+    name: string
+    relationships:
+      hasMany: Ticket
+
+  User:
+    relationships:
+      hasMany: Ticket, TicketAssignment
+
+
