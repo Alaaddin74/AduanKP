@@ -14,6 +14,10 @@ $darkText = "dark:text-{$color}-400";
 <div class="relative bg-gradient-to-br {{ $bgFrom }} {{ $bgTo }} {{ $darkBg }} border {{ $border }} {{ $darkBorder }} rounded-xl p-6 shadow-lg hover:shadow-xl transition-all duration-300 group">
     <div class="absolute top-4 right-4 p-2 bg-{{ $color }}-100 dark:bg-{{ $color }}-800/50 rounded-lg">
         {{-- <x-dynamic-component :component="'icons.' . $icon" class="w-5 h-5 {{ $text }} {{ $darkText }}" /> --}}
+        <!-- Inline Heroicon for "check" -->
+<svg class="w-5 h-5 {{ $text }} {{ $darkText }}" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+</svg>
     </div>
     <div class="{{ $text }} {{ $darkText }} text-sm font-semibold mb-2">{{ $title }}</div>
     <div class="text-3xl font-bold text-{{ $color }}-800 dark:text-{{ $color }}-200 mb-1">{{ $count }}</div>
