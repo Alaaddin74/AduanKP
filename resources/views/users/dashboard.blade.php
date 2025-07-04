@@ -4,8 +4,11 @@
     <meta charset="UTF-8">
     <title>Dashboard Pengguna</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    
+    <!-- Bootstrap & Icons -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
+
     <style>
         body { background-color: #f4f6f9; }
         .sidebar {
@@ -40,6 +43,7 @@
 </div>
 
 <div class="main">
+    <!-- Form Pencarian -->
     <div class="card mb-4">
         <div class="card-body">
             <h5 class="mb-3">Cari Tiket</h5>
@@ -146,6 +150,7 @@
   </div>
 </div>
 
+<!-- Script -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 <script>
 document.addEventListener('DOMContentLoaded', function () {
@@ -161,6 +166,7 @@ document.addEventListener('DOMContentLoaded', function () {
         document.getElementById('detail_status').innerText = ticket.status.replaceAll('_', ' ').toUpperCase();
         document.getElementById('detail_email').innerText = ticket.email || '-';
         document.getElementById('detail_okupasi').innerText = ticket.faculty_name || '-';
+
         const link = document.getElementById('detail_link');
         link.href = ticket.site_link;
         link.innerText = ticket.site_link;
@@ -169,27 +175,28 @@ document.addEventListener('DOMContentLoaded', function () {
         const image = document.getElementById('lampiran_image');
 
         if (ticket.attachment) {
-    const fileUrl = `/storage/${ticket.attachment}`;
-    fileLink.href = fileUrl;
-    fileLink.innerText = 'Lihat Lampiran';
+            const fileUrl = `/storage/${ticket.attachment}`;
+            fileLink.href = fileUrl;
+            fileLink.innerText = 'Lihat Lampiran';
 
-    // Jika file gambar, tampilkan preview
-    const ext = ticket.attachment.split('.').pop().toLowerCase();
-    if (['jpg', 'jpeg', 'png'].includes(ext)) {
-        image.src = fileUrl;
-        image.classList.remove('d-none');
-    } else {
-        image.classList.add('d-none');
-    }
-} else {
-    fileLink.href = '#';
-    fileLink.innerText = '(Tidak ada lampiran)';
-    image.classList.add('d-none');
-}
+            const ext = ticket.attachment.split('.').pop().toLowerCase();
+            if (['jpg', 'jpeg', 'png'].includes(ext)) {
+                image.src = fileUrl;
+                image.classList.remove('d-none');
+            } else {
+                image.classList.add('d-none');
+            }
+        } else {
+            fileLink.href = '#';
+            fileLink.innerText = '(Tidak ada lampiran)';
+            image.classList.add('d-none');
+        }
+
         const assignedTo = document.getElementById('detail_assigned_to');
         assignedTo.innerText = ticket.assignment?.assigned_to_name || 'Not Assigned';
     });
 });
 </script>
+
 </body>
 </html>
