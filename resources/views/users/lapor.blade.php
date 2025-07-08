@@ -43,7 +43,7 @@
     }
 
     label { margin-top: 15px; margin-bottom: 5px; }
-    select, input[type="text"], input[type="email"], input[type="file"] {
+    select, input[type="text"], input[type="email"], input[type="file"], textarea {
       width: 100%;
       padding: 10px;
       margin-bottom: 10px;
@@ -70,20 +70,19 @@
     .btn-reset, .btn-submit, .btn-back {
       padding: 10px 15px;
       margin-top: 10px;
+      border: none;
     }
 
     .btn-submit {
       background: #28a745;
       color: white;
       float: right;
-      border: none;
     }
 
     .btn-back {
       background: #6c757d;
       color: white;
       text-decoration: none;
-      border: none;
     }
 
     .note { font-size: 12px; color: #666; }
@@ -96,7 +95,7 @@
   <h4>Situs Laporan</h4>
   <p>{{ strtoupper(Auth::user()->name ?? 'Pengguna Umum') }}</p>
   <p class="small text-muted">{{ Auth::user()->email ?? 'Tidak Login' }}</p>
-  <a href="{{ route('dashboard') }}"><i class="bi bi-house"></i> Dashboard</a>
+  <a href="{{ route('user.dashboard') }}"><i class="bi bi-house"></i> Dashboard</a>
   <a href="{{ route('lapor.create') }}"><i class="bi bi-plus-circle"></i> Buat Ticket</a>
 </div>
 
@@ -110,7 +109,7 @@
 
       <!-- Keluhan -->
       <label for="keluhan">Keluhan</label>
-      <select name="keluhan" id="keluhan" required>
+      <select name="keluhan" id="keluhan" class="form-select" required>
         <option value="">-- Pilih Keluhan --</option>
         <option value="konten_tidak_pantas">Konten Tidak Pantas</option>
         <option value="menghapus_index">Menghapus Index</option>
@@ -131,22 +130,25 @@
       <label for="link">Link Situs</label>
       <input type="text" name="link" id="link" required placeholder="Contoh: https://example.com">
 
-      <!-- Okupasi / Fakultas -->
+      <!-- Okupasi -->
       <label for="okupasi">Fakultas / Okupasi</label>
       <select name="okupasi" id="okupasi" class="form-select" required onchange="toggleLainnyaBox(this.value)">
         <option value="">-- Pilih Fakultas / Okupasi --</option>
         @foreach($faculties as $fakultas)
           <option value="{{ $fakultas->name }}">{{ $fakultas->name }}</option>
-        @endforeach
-        <option value="lainnya">Lainnya</option>
+        @endforeach 
       </select>
 
-      <!-- Input Okupasi Lainnya (optional) -->
+      <!-- Input Okupasi Lainnya -->
       <input type="text" name="okupasi_lainnya" id="okupasi_lainnya" class="form-control d-none" placeholder="Isi Okupasi Lainnya...">
 
       <!-- Email -->
       <label for="email">Email</label>
       <input type="email" name="email" id="email" required>
+
+      <!-- Deskripsi -->
+      <label for="description">Deskripsi</label>
+      <textarea name="description" id="description" rows="4" class="form-control" required placeholder="Jelaskan secara rinci masalah Anda..."></textarea>
 
       <!-- Lampiran -->
       <div class="lampiran">
@@ -157,9 +159,9 @@
         <div class="preview">Preview Gambar</div>
       </div>
 
-      <!-- Tombol -->
+      <!-- Tombol Aksi -->
       <div class="d-flex justify-content-between mt-4">
-        <a href="{{ route('dashboard') }}" class="btn-back">← Kembali ke Dashboard</a>
+        <a href="{{ route('user.dashboard') }}" class="btn-back">← Kembali ke Dashboard</a>
         <button type="submit" class="btn-submit">Lapor!</button>
       </div>
     </form>
@@ -168,7 +170,7 @@
 
 <!-- Script -->
 <script>
-  // Preview gambar
+  // Preview gambar lampiran
   document.getElementById('lampiran').addEventListener('change', function (e) {
     const preview = document.querySelector('.preview');
     const file = e.target.files[0];
@@ -183,7 +185,7 @@
     }
   });
 
-  // Toggle input manual jika pilih "lainnya"
+  // Tampilkan input manual jika pilih "lainnya"
   function toggleLainnyaBox(value) {
     const lainnyaInput = document.getElementById('okupasi_lainnya');
     if (value === 'lainnya') {

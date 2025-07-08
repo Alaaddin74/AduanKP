@@ -28,10 +28,7 @@ return new class extends Migration
 
             $table->enum('priority', ['low', 'medium', 'high']);
             $table->string('site_link')->nullable();
-
-            // Ganti faculty_id menjadi manual input: faculty_name / okupasi
             $table->string('faculty_name');
-
             $table->string('email');
             $table->string('attachment')->nullable();
             $table->enum('status', ['submitted', 'in_progress', 'done', 'rejected'])->default('submitted');
