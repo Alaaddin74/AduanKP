@@ -140,7 +140,7 @@
         <p><strong>Okupasi:</strong> <span id="detail_okupasi"></span></p>
         <p><strong>Link Situs:</strong> <a href="#" id="detail_link" target="_blank">Lihat</a></p>
         <p><strong>Assigned To:</strong> <span id="detail_assigned_to">Not Assigned</span></p>
-        <p><strong>Deskripsi:</strong> <span id="detail_deskripsi"></span></p>
+        <p><strong>Catatan:</strong> <span id="detail_deskripsi"></span></p>
         <div id="lampiran_section">
           <p><strong>Lampiran:</strong></p>
           <a href="#" id="detail_lampiran" target="_blank">Lihat Lampiran</a>

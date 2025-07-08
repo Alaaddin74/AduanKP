@@ -147,7 +147,7 @@
       <input type="email" name="email" id="email" required>
 
       <!-- Deskripsi -->
-      <label for="description">Deskripsi</label>
+      <label for="description">Catatan</label>
       <textarea name="description" id="description" rows="4" class="form-control" required placeholder="Jelaskan secara rinci masalah Anda..."></textarea>
 
       <!-- Lampiran -->
