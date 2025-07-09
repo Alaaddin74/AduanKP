@@ -29,7 +29,7 @@
                 <p class="text-lg text-gray-800 dark:text-gray-100">{{ $ticket->ticket_number }}</p>
 
                 <label class="text-sm text-gray-600 dark:text-gray-400 mt-4 block">Email:</label>
-                <p class="text-lg text-gray-800 dark:text-gray-100">{{ $ticket->user->email }}</p>
+                <p class="text-lg text-gray-800 dark:text-gray-100">{{ $ticket->user->email ??  $ticket->email }}</p>
 
                 <label class="text-sm text-gray-600 dark:text-gray-400 mt-4 block">Entity:</label>
                 <p class="text-lg text-gray-800 dark:text-gray-100">{{ $ticket->faculty->name ?? '-' }}</p>

@@ -78,7 +78,6 @@
                         <th>Prioritas</th>
                         <th>Status</th>
                         <th>Email</th>
-                        <th>Assigned To</th>
                         <th>Aksi</th>
                     </tr>
                 </thead>
@@ -100,7 +99,6 @@
                             @endif
                         </td>
                         <td>{{ $ticket->email ?? '-' }}</td>
-                        <td>{{ optional($ticket->assignment)->assigned_to_name ?? 'Not Assigned' }}</td>
                         <td>
                             <button class="btn btn-sm btn-info text-white"
                                     data-bs-toggle="modal"
@@ -139,7 +137,6 @@
         <p><strong>Email Pelapor:</strong> <span id="detail_email"></span></p>
         <p><strong>Okupasi:</strong> <span id="detail_okupasi"></span></p>
         <p><strong>Link Situs:</strong> <a href="#" id="detail_link" target="_blank">Lihat</a></p>
-        <p><strong>Assigned To:</strong> <span id="detail_assigned_to">Not Assigned</span></p>
         <p><strong>Catatan:</strong> <span id="detail_deskripsi"></span></p>
         <div id="lampiran_section">
           <p><strong>Lampiran:</strong></p>
@@ -166,8 +163,11 @@ document.addEventListener('DOMContentLoaded', function () {
         document.getElementById('detail_prioritas').innerText = ticket.priority.toUpperCase();
         document.getElementById('detail_status').innerText = ticket.status.replaceAll('_', ' ').toUpperCase();
         document.getElementById('detail_email').innerText = ticket.email || '-';
-        document.getElementById('detail_okupasi').innerText = ticket.faculty_name || '-';
         document.getElementById('detail_deskripsi').innerText = ticket.description || '-';
+
+        // Okupasi / Fakultas
+        const fakultas = ticket.faculty?.name || ticket.faculty_name || '-';
+        document.getElementById('detail_okupasi').innerText = fakultas;
 
         const link = document.getElementById('detail_link');
         link.href = ticket.site_link;
@@ -193,9 +193,6 @@ document.addEventListener('DOMContentLoaded', function () {
             fileLink.innerText = '(Tidak ada lampiran)';
             image.classList.add('d-none');
         }
-
-        const assignedTo = document.getElementById('detail_assigned_to');
-        assignedTo.innerText = ticket.assignment?.assigned_to_name || 'Not Assigned';
     });
 });
 </script>
