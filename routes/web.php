@@ -39,7 +39,7 @@ Route::middleware(['auth'])->group(function () {
 // =======================
 // 🏠 Halaman Awal ➝ Dashboard
 // =======================
-Route::get('/', fn() => redirect()->route('dashboard'))->name('home');
+Route::get('/', fn() => redirect()->route('user.dashboard'))->name('home');
 
 
 // =======================
