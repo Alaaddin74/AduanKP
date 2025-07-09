@@ -89,7 +89,7 @@
                                 #{{ $ticket->ticket_number }}
                             </td>
                             <td class="px-4 py-3 whitespace-nowrap text-gray-900 dark:text-gray-100">
-                                {{ $ticket->user->name }}
+                                {{ $ticket->user->name ?? 'Umum'}}
                             </td>
                             <td class="px-4 py-3 whitespace-nowrap">
                                 {{ $ticket->faculty->name ?? '-' }}
