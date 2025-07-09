@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <title>Dashboard Pengguna</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
-
+    
     <!-- Bootstrap & Icons -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
@@ -140,6 +140,7 @@
         <p><strong>Okupasi:</strong> <span id="detail_okupasi"></span></p>
         <p><strong>Link Situs:</strong> <a href="#" id="detail_link" target="_blank">Lihat</a></p>
         <p><strong>Assigned To:</strong> <span id="detail_assigned_to">Not Assigned</span></p>
+        <p><strong>Catatan:</strong> <span id="detail_deskripsi"></span></p>
         <div id="lampiran_section">
           <p><strong>Lampiran:</strong></p>
           <a href="#" id="detail_lampiran" target="_blank">Lihat Lampiran</a>
@@ -166,6 +167,7 @@ document.addEventListener('DOMContentLoaded', function () {
         document.getElementById('detail_status').innerText = ticket.status.replaceAll('_', ' ').toUpperCase();
         document.getElementById('detail_email').innerText = ticket.email || '-';
         document.getElementById('detail_okupasi').innerText = ticket.faculty_name || '-';
+        document.getElementById('detail_deskripsi').innerText = ticket.description || '-';
 
         const link = document.getElementById('detail_link');
         link.href = ticket.site_link;
