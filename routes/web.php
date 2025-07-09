@@ -58,6 +58,6 @@ Route::delete('/ticket/{id}', [UmumController::class, 'destroy'])->name('ticket.
 // Tanpa login
 Route::get('/user/dashboard', [UmumController::class, 'index'])->name('user.dashboard');
 Route::get('/lapor', [UmumController::class, 'create'])->name('lapor.create');
-Route::post('/lapor', [UmumController::class, 'store'])->name('lapor.store');
+// Route::post('/lapor', [UmumController::class, 'store'])->name('lapor.store');
 
 require __DIR__ . '/auth.php';
