@@ -18,6 +18,7 @@ class Ticket extends Model
         'category',
         'priority',
         'site_link',
+        'email',
         'faculty_id',
         'attachment',
         'status',

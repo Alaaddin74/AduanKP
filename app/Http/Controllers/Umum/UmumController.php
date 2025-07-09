@@ -48,47 +48,50 @@ class UmumController extends Controller
      * Simpan laporan pengguna ke database.
      */
     public function store(Request $request)
-    {
+{
+    // Validasi dasar
+    $request->validate([
+        'keluhan'   => 'required|in:konten_tidak_pantas,menghapus_index,pornografi,judi_online,lainnya',
+        'prioritas' => 'required|in:low,medium,high',
+        'link'      => 'required|string|max:255',
+        'okupasi'   => 'required|string|max:255',
+        'email'     => 'required|email',
+        'lampiran'  => 'nullable|file|mimes:jpg,jpeg,png|max:2048',
+    ]);
+
+    // Tangani input okupasi "lainnya"
+    $okupasi = $request->okupasi;
+    if ($okupasi === 'lainnya') {
         $request->validate([
-            'keluhan'   => 'required|in:konten_tidak_pantas,menghapus_index,pornografi,judi_online,lainnya',
-            'prioritas' => 'required|in:low,medium,high',
-            'link'      => 'required|url',
-            'okupasi'   => 'required|string|max:255',
-            'email'     => 'required|email',
-            'lampiran'  => 'nullable|file|mimes:jpg,jpeg,png|max:2048',
+            'okupasi_lainnya' => 'required|string|max:255',
         ]);
-
-        // Jika pilih "lainnya", gunakan input manual
-        $faculty_id = $request->okupasi;
-        if ($faculty_id === 'lainnya') {
-            $request->validate([
-                'okupasi_lainnya' => 'required|string|max:255',
-            ]);
-            $faculty_id = $request->okupasi_lainnya;
-        }
-
-        // Upload lampiran jika tersedia
-        $lampiranPath = null;
-        if ($request->hasFile('lampiran')) {
-            $lampiranPath = $request->file('lampiran')->store('attachments', 'public');
-        }
-
-        // Simpan ke database
-        Ticket::create([
-            'ticket_number' => 'TIC-' . strtoupper(Str::random(8)),
-            'category'      => $request->keluhan,
-            'priority'      => $request->prioritas,
-            'site_link'     => $request->link,
-            'faculty_id'  => $faculty_id,
-            'email'         => $request->email,
-            'attachment'    => $lampiranPath,
-            'status'        => 'submitted',
-            'description'   => 'Laporan pengguna umum',
-        ]);
-
-        return redirect()->route('user.dashboard')
-            ->with('success', 'Laporan berhasil dikirim!');
+        $okupasi = $request->okupasi_lainnya;
     }
+
+    // Upload file lampiran jika ada
+    $lampiranPath = null;
+    if ($request->hasFile('lampiran') && $request->file('lampiran')->isValid()) {
+        $lampiranPath = $request->file('lampiran')->store('attachments', 'public');
+    }
+
+    // Simpan data tiket ke database
+    Ticket::create([
+        'ticket_number' => 'TIC-' . strtoupper(Str::random(8)),
+        'category'      => $request->keluhan,
+        'priority'      => $request->prioritas,
+        'site_link'     => $request->link,
+        'faculty_id'    => $okupasi, // rename if needed for clarity
+        'email'         => $request->email,
+        'attachment'    => $lampiranPath,
+        'status'        => 'submitted',
+        'description'   => 'Laporan pengguna umum',
+    ]);
+
+    // Redirect ke dashboard dengan pesan sukses
+    return redirect()->route('user.dashboard')
+        ->with('success', 'Laporan berhasil dikirim!');
+}
+
 
     /**
      * Hapus laporan dan lampiran berdasarkan ID.
