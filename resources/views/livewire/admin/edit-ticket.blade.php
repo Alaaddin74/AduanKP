@@ -23,7 +23,7 @@
         <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
             <div>
                 <label class="text-sm text-gray-600 dark:text-gray-400">Name:</label>
-                <p class="text-lg text-gray-800 dark:text-gray-100">{{ $ticket->user->name }}</p>
+                <p class="text-lg text-gray-800 dark:text-gray-100">{{ $ticket->user->name?? 'Umum' }}</p>
 
                 <label class="text-sm text-gray-600 dark:text-gray-400 mt-4 block">No ID:</label>
                 <p class="text-lg text-gray-800 dark:text-gray-100">{{ $ticket->ticket_number }}</p>
