@@ -30,6 +30,15 @@
         >
             {{ __('Tickets') }}
         </flux:navlist.item>
+
+        <flux:navlist.item
+            icon="plus-circle"
+            :href="route('create.index')"
+            :current="request()->routeIs('create.index')"
+            wire:navigate
+        >
+            {{ __('Add Ticket') }}
+        </flux:navlist.item>
     </flux:navlist.group>
 </flux:navlist>
 

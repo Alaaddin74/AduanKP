@@ -90,6 +90,16 @@
 <div class="main">
   <div class="container-report">
     <h3 class="mb-4 text-muted">Formulir Laporan</h3>
+    @if ($errors->any())
+    <div class="alert alert-danger">
+        <strong>Terjadi kesalahan:</strong>
+        <ul class="mb-0">
+            @foreach ($errors->all() as $error)
+                <li>{{ $error }}</li>
+            @endforeach
+        </ul>
+    </div>
+@endif
 
     <form method="POST" action="{{ route('lapor.store') }}" enctype="multipart/form-data">
       @csrf

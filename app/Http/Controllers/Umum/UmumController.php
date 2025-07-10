@@ -73,11 +73,15 @@ class UmumController extends Controller
         }
     }
 
+
     // Simpan lampiran
     $lampiranPath = null;
-    if ($request->hasFile('lampiran')) {
-        $lampiranPath = $request->file('lampiran')->store('attachments', 'public');
-    }
+if ($request->hasFile('lampiran') && $request->file('lampiran')->isValid()) {
+    $file = $request->file('lampiran');
+    $filename = time() . '_' . $file->getClientOriginalName();
+    $file->move(public_path('attachments'), $filename);
+    $lampiranPath = 'attachments/' . $filename;
+}
 
     // Simpan ke database
     $ticket = Ticket::create([

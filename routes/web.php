@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Umum\UmumController;
 use App\Livewire\Admin\DisplayTicket;
 use App\Livewire\Admin\EditTicket;
+use App\Livewire\Admin\TicketCreate;
 
 Route::get('/', function () {
     return view('welcome');
@@ -19,12 +20,15 @@ Route::get('dashboard', function () {
 Route::get('TicketTable', function () {
     return view('admin.TicketTable');
 })->middleware(['auth', 'verified'])->name('tickets.index');
-
+Route::get('addTicket', TicketCreate::class)
+    ->middleware(['auth', 'verified'])
+    ->name('create.index');
 
 Route::middleware(['auth'])->group(function () {
 
     Route::get('/admin/tickets/{ticket}/edit', EditTicket::class)->name('admin.tickets.edit');
     Route::get('/tickets/{ticketId}', DisplayTicket::class)->name('tickets.show');
+    // Route::get('admin/tickets/create', TicketCreate::class)->name('tickets.create');
 
     Route::redirect('settings', 'settings/profile');
 

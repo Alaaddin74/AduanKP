@@ -52,8 +52,8 @@
                         'Ticket Number' => $ticket->ticket_number,
                         'Category' => $ticket->category,
                         'Faculty' => $ticket->faculty ? $ticket->faculty->name : 'Not Specified',
-                        'User  Email' => $ticket->user ? $ticket->user->email : 'Not Available',
-                        'User  Name' => $ticket->user ? $ticket->user->name : 'Not Available',
+                        'User  Email' => $ticket->email ?? 'Not Available',
+                        'User  Name' => $ticket->user ? $ticket->user->name : 'Pengguna Umum',
                         'Ticket Date' => $ticket->created_at->format('d M Y'),
                     ] as $label => $value)
                         <div class="bg-gray-50 dark:bg-gray-800 p-2 rounded-lg">

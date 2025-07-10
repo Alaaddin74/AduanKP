@@ -25,7 +25,7 @@
                 <label class="text-sm text-gray-600 dark:text-gray-400">Name:</label>
                 <p class="text-lg text-gray-800 dark:text-gray-100">{{ $ticket->user->name?? 'Umum' }}</p>
 
-                <label class="text-sm text-gray-600 dark:text-gray-400 mt-4 block">No ID:</label>
+                <label class="text-sm text-gray-600 dark:text-gray-400 mt-4 block">Ticket ID:</label>
                 <p class="text-lg text-gray-800 dark:text-gray-100">{{ $ticket->ticket_number }}</p>
 
                 <label class="text-sm text-gray-600 dark:text-gray-400 mt-4 block">Email:</label>
@@ -42,8 +42,8 @@
 
                 @if ($ticket->attachment)
                     <label class="text-sm text-gray-600 dark:text-gray-400 mt-4 block">Lampiran:</label>
-                    <a href="{{ Storage::url($ticket->attachment) }}" target="_blank">
-                        <img src="{{ Storage::url($ticket->attachment) }}" class="w-40 h-auto border rounded shadow mt-2" alt="Attachment Preview">
+                    <a href="{{ asset($ticket->attachment)}}" target="_blank">
+                        <img src="{{ asset($ticket->attachment) }}" class="w-40 h-auto border rounded shadow mt-2" alt="Attachment Preview">
                     </a>
                 @endif
             </div>
