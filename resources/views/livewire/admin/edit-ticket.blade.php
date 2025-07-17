@@ -41,10 +41,23 @@
                 <p class="text-lg text-gray-800 dark:text-gray-100 whitespace-pre-wrap">{{ $ticket->description }}</p>
 
                 @if ($ticket->attachment)
+                @php
+    $storagePath = asset('storage/' . $ticket->attachment);
+    $publicPath = asset($ticket->attachment);
+@endphp
                     <label class="text-sm text-gray-600 dark:text-gray-400 mt-4 block">Lampiran:</label>
-                    <a href="{{ asset($ticket->attachment)}}" target="_blank">
-                        <img src="{{ asset($ticket->attachment) }}" class="w-40 h-auto border rounded shadow mt-2" alt="Attachment Preview">
-                    </a>
+                    {{-- Try storage path first --}}
+@if (file_exists(public_path('storage/' . $ticket->attachment)))
+    <a href="{{ $storagePath }}" target="_blank">
+        <img src="{{ $storagePath }}" class="w-40 h-auto border rounded shadow mt-2" alt="Attachment Preview">
+    </a>
+@elseif (file_exists(public_path($ticket->attachment)))
+    <a href="{{ $publicPath }}" target="_blank">
+        <img src="{{ $publicPath }}" class="w-40 h-auto border rounded shadow mt-2" alt="Attachment Preview">
+    </a>
+@else
+    <p class="text-sm text-red-500 mt-2">Attachment not found.</p>
+@endif
                 @endif
             </div>
 

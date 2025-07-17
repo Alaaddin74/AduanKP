@@ -5,6 +5,7 @@ namespace App\Livewire\Admin;
 use App\Models\Faculty;
 use App\Models\Ticket;
 use Illuminate\Support\Facades\Auth;
+use Livewire\Attributes\Validate;
 use Livewire\Component;
 use Livewire\Features\SupportFileUploads\WithFileUploads;
 
@@ -18,6 +19,7 @@ class TicketCreate extends Component
     public $site_link;
     public $email;
     public $faculty_id;
+    // #[Validate('image|max:1024')]
     public $attachment;
     public $description;
 
@@ -45,12 +47,14 @@ class TicketCreate extends Component
             'priority' => 'required|in:low,medium,high',
             'site_link' => 'nullable|url',
             'faculty_id' => 'nullable|exists:faculties,id',
-            'attachment' => 'nullable|file|mimes:jpg,jpeg,png,pdf|max:2048', // 2MB max
+            'attachment' => 'required|file|mimes:jpg,jpeg,png,pdf|max:2048', // 2MB max
             'description' => 'required|string|max:1000',
         ]);
 
-        $path = $this->attachment ? $this->attachment->store('attachments', 'public') : null;
-
+        if ($this->attachment) {
+            $path = $this->attachment->storePublicly('attachments', 'public');
+        }
+        // $path = $this->attachment ? $this->attachment->store('attachments', 'public') : null;
         Ticket::create([
             'ticket_number' => $this->ticket_number,
             'user_id' => Auth::id(),

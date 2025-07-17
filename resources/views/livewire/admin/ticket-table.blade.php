@@ -1,57 +1,60 @@
 <div class="w-full overflow-x-auto space-y-6">
     <!-- Filters Section -->
-    <div class="p-5 bg-white dark:bg-gray-900 shadow-sm rounded-xl border border-gray-200 dark:border-gray-700">
-        <div class="flex flex-wrap items-center gap-4">
-            <!-- Search Input -->
-            <div class="flex-1 min-w-[250px]">
-                <input type="text" wire:model.debounce.300ms="search" placeholder="🔍 Search by ticket number or user"
-                    class="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition-all" />
-            </div>
+    <div class="p-6 bg-blue-50 dark:bg-blue-950 shadow rounded-2xl border border-blue-200 dark:border-blue-700">
+    <div class="flex flex-wrap items-center gap-4">
+        <!-- 🔍 Search Input -->
+        <div class="flex-1 min-w-[250px]">
+            <input type="text" wire:model.debounce.300ms="search" placeholder="🔍 Search ticket number or user"
+                class="w-full px-4 py-2 text-sm rounded-xl bg-white dark:bg-blue-900 border border-blue-300 dark:border-blue-600 placeholder:text-blue-400 dark:placeholder:text-blue-300 text-blue-900 dark:text-white focus:ring-2 focus:ring-blue-500 focus:outline-none transition-all duration-200 shadow-sm" />
+        </div>
 
-            <!-- Status Filter -->
-            <div class="min-w-[160px]">
-                <select wire:model="statusFilter"
-                    class="w-full px-4 py-2 border rounded-lg border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:ring-2 focus:ring-indigo-500">
-                    <option value="">🗂 All Statuses</option>
-                    <option value="submitted">📩 Submitted</option>
-                    <option value="in_progress">⏳ In Progress</option>
-                    <option value="done">✅ Done</option>
-                    <option value="rejected">❌ Rejected</option>
-                </select>
-            </div>
+        <!-- 🗂 Status Filter -->
+        <div class="min-w-[180px]">
+            <select wire:model="statusFilter"
+                class="w-full px-4 py-2 text-sm rounded-xl bg-white dark:bg-blue-900 border border-blue-300 dark:border-blue-600 text-blue-900 dark:text-white focus:ring-2 focus:ring-blue-500 focus:outline-none shadow-sm">
+                <option value="">🗂 All Statuses</option>
+                <option value="submitted">📩 Submitted</option>
+                <option value="in_progress">⏳ In Progress</option>
+                <option value="done">✅ Done</option>
+                <option value="rejected">❌ Rejected</option>
+            </select>
+        </div>
 
-            <!-- Faculty Filter -->
-            <div class="min-w-[160px]">
-                <select wire:model="facultyFilter"
-                    class="w-full px-4 py-2 border rounded-lg border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:ring-2 focus:ring-indigo-500">
-                    <option value="">🏫 All Faculties</option>
-                    @foreach ($faculties as $faculty)
-                        <option value="{{ $faculty->id }}">{{ $faculty->name }}</option>
-                    @endforeach
-                </select>
-            </div>
+        <!-- 🏫 Faculty Filter -->
+        <div class="min-w-[180px]">
+            <select wire:model="facultyFilter"
+                class="w-full px-4 py-2 text-sm rounded-xl bg-white dark:bg-blue-900 border border-blue-300 dark:border-blue-600 text-blue-900 dark:text-white focus:ring-2 focus:ring-blue-500 focus:outline-none shadow-sm">
+                <option value="">🏫 All Faculties</option>
+                @foreach ($faculties as $faculty)
+                    <option value="{{ $faculty->id }}">{{ $faculty->name }}</option>
+                @endforeach
+            </select>
+        </div>
 
-            <!-- Additional Search -->
-            <div class="flex items-center gap-2 min-w-[250px]">
-                <input type="text" wire:model.defer="searchInput" placeholder="🔍 Advanced search"
-                    class="flex-1 px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:ring-2 focus:ring-indigo-500" />
-                <button wire:click="applySearch"
-                    class="px-4 py-2 bg-indigo-600 hover:bg-indigo-700 text-white rounded-lg font-semibold shadow-sm transition-all flex items-center gap-2">
-                    <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-                        <path d="M21 21l-4.35-4.35M10.5 17a6.5 6.5 0 1 0 0-13 6.5 6.5 0 0 0 0 13z" />
-                    </svg>
-                    Search
-                </button>
-            </div>
+        <!-- 🧠 Advanced Search -->
+        <div class="flex items-center gap-2 min-w-[250px]">
+            <input type="text" wire:model.defer="searchInput" placeholder="🔎 Advanced search"
+                class="flex-1 px-4 py-2 text-sm rounded-xl bg-white dark:bg-blue-900 border border-blue-300 dark:border-blue-600 placeholder:text-blue-400 dark:placeholder:text-blue-300 text-blue-900 dark:text-white focus:ring-2 focus:ring-blue-500 focus:outline-none shadow-sm" />
+            <button wire:click="applySearch"
+                class="flex items-center gap-2 px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white text-sm font-semibold rounded-xl shadow transition duration-200">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                    <path d="M21 21l-4.35-4.35M10.5 17a6.5 6.5 0 1 0 0-13 6.5 6.5 0 0 0 0 13z" />
+                </svg>
+                Search
+            </button>
         </div>
     </div>
+</div>
+
+
 
     <!-- Table Container -->
-    <div class="bg-white dark:bg-gray-900 rounded-xl shadow-md border border-gray-200 dark:border-gray-700 overflow-hidden">
+    <div
+        class="bg-white dark:bg-gray-900 rounded-xl shadow-md border border-gray-200 dark:border-gray-700 overflow-hidden">
         <div class="overflow-x-auto">
             <table class="min-w-full divide-y divide-gray-200 dark:divide-gray-700 text-sm">
                 <!-- Table Header -->
-                <thead class="bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-300 sticky top-0 z-10">
+                <thead class="bg-blue-100 dark:bg-blue-800 text-blue-600 dark:text-white sticky top-0 z-10">
                     <tr>
                         @foreach (['Ticket #', 'User', 'Faculty'] as $label)
                             <th class="px-4 py-3 text-left font-semibold uppercase tracking-wider">
@@ -89,7 +92,7 @@
                                 #{{ $ticket->ticket_number }}
                             </td>
                             <td class="px-4 py-3 whitespace-nowrap text-gray-900 dark:text-gray-100">
-                                {{ $ticket->user->name ?? 'Umum'}}
+                                {{ $ticket->user->name ?? 'Umum' }}
                             </td>
                             <td class="px-4 py-3 whitespace-nowrap">
                                 {{ $ticket->faculty->name ?? '-' }}
@@ -97,19 +100,22 @@
                             <td class="px-4 py-3 whitespace-nowrap">
                                 @if ($ticket->assignment && $ticket->assignment->assignedTo)
                                     <div class="flex items-center gap-2">
-                                        <div class="h-8 w-8 rounded-full bg-indigo-200 dark:bg-indigo-900 flex items-center justify-center text-xs font-bold text-indigo-900 dark:text-white">
+                                        <div
+                                            class="h-8 w-8 rounded-full bg-indigo-200 dark:bg-indigo-900 flex items-center justify-center text-xs font-bold text-indigo-900 dark:text-white">
                                             {{ substr($ticket->assignment->assignedTo->name, 0, 2) }}
                                         </div>
                                         <span>{{ $ticket->assignment->assignedTo->name }}</span>
                                     </div>
                                 @else
-                                    <span class="px-2 py-0.5 rounded-full bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 text-xs font-medium">
+                                    <span
+                                        class="px-2 py-0.5 rounded-full bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 text-xs font-medium">
                                         Unassigned
                                     </span>
                                 @endif
                             </td>
                             <td class="px-4 py-3 whitespace-nowrap">
-                                <span class="px-2 py-0.5 rounded-full text-xs font-medium capitalize
+                                <span
+                                    class="px-2 py-0.5 rounded-full text-xs font-medium capitalize
                                     @if ($ticket->priority === 'high') bg-red-100 text-red-800 dark:bg-red-900 dark:text-red-200
                                     @elseif ($ticket->priority === 'medium') bg-yellow-100 text-yellow-800 dark:bg-yellow-900 dark:text-yellow-200
                                     @else bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200 @endif">
@@ -117,7 +123,8 @@
                                 </span>
                             </td>
                             <td class="px-4 py-3 whitespace-nowrap">
-                                <span class="px-2 py-0.5 rounded-full text-xs font-medium capitalize
+                                <span
+                                    class="px-2 py-0.5 rounded-full text-xs font-medium capitalize
                                     @switch($ticket->status)
                                         @case('submitted') bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-200 @break
                                         @case('in_progress') bg-yellow-100 text-yellow-800 dark:bg-yellow-900 dark:text-yellow-200 @break
@@ -163,8 +170,8 @@
         </div>
 
         <!-- Pagination -->
-        @if($this->tickets->hasPages())
-            <div class="px-6 py-4 bg-gray-50 dark:bg-gray-800 border-t border-gray-200 dark:border-gray-700">
+        @if ($this->tickets->hasPages())
+            <div class="px-6 py-4 bg-blue-50 dark:bg-blue-800 border-t border-blue-200 dark:border-blue-700">
                 {{ $this->tickets->links() }}
             </div>
         @endif

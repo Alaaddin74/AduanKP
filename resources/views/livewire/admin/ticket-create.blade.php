@@ -75,10 +75,15 @@
             @enderror
         </div> --}}
         <div>
-            <flux:input wire:model="attachment" type="file" />
+            <flux:input wire:model="attachment" type="file" accept="image/*" />
             @error('attachment')
                 <span class="text-sm text-red-500">{{ $message }}</span>
             @enderror
+
+            @if ($attachment)
+                attachment Preview:
+                <img src="{{ $attachment->temporaryUrl() }}">
+            @endif
         </div>
 
         <!-- Description -->
