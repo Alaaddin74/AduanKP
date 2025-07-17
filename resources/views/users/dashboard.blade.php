@@ -9,44 +9,171 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
 
-    <style>
-        body { background-color: #f4f6f9; }
-        .sidebar {
-            height: 100vh;
-            background-color: #343a40;
-            color: white;
-            padding: 20px;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 250px;
-        }
-        .sidebar h4 { margin-bottom: 30px; }
-        .sidebar a {
-            display: block;
-            color: #ccc;
-            text-decoration: none;
-            margin: 15px 0;
-        }
-        .sidebar a:hover { color: #fff; }
-        .main { margin-left: 270px; padding: 20px; }
-    </style>
+<style>
+    body {
+        background-color: #1a3365; /* Warna dasar seperti di background utama */
+        color: white;
+    }
+
+    .sidebar {
+    height: 100vh;
+    background: linear-gradient(to bottom, #003366, #0055a5);
+    color: white;
+    padding: 20px;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 250px;
+
+    display: flex;
+    flex-direction: column;
+}
+
+    .sidebar h4 {
+        margin-bottom: 30px;
+        color: white;
+    }
+
+    .sidebar p {
+        margin-bottom: 0.2rem;
+        color: #cfd8dc;
+    }
+
+    .sidebar .small {
+        font-size: 0.8rem;
+        color: #90caf9;
+    }
+
+    .sidebar a {
+        display: block;
+        color: #bbdefb;
+        text-decoration: none;
+        margin: 15px 0;
+        font-weight: 500;
+    }
+
+    .sidebar a i {
+        margin-right: 8px;
+    }
+
+    .sidebar a:hover {
+        color: #ffffff;
+    }
+
+    .main {
+        margin-left: 270px;
+        padding: 20px;
+        background-color: #1a3365; 
+        min-height: 100vh;
+    }
+
+    .card {
+        background-color: #002b5c; 
+        color: white;
+        border: none;
+    }
+
+    .card .form-control {
+        background-color: #0c274a;
+        border: 1px solid #4682b4;
+        color: white;
+    }
+
+    .card .form-control::placeholder {
+        color: #b0bec5;
+    }
+
+    .btn-primary {
+        background-color: #3b7ddd;
+        border: none;
+    }
+
+    .btn-primary:hover {
+        background-color: #2f65b3;
+    }
+
+    .table thead {
+        background-color: #0d47a1;
+        color: white;
+    }
+
+    .table td, .table th {
+        background-color: #001e3c;
+        color: white;
+        vertical-align: middle;
+    }
+
+    .badge.bg-info {
+        background-color: #4fc3f7 !important;
+        color: #003366;
+    }
+
+    .badge.bg-success {
+        background-color: #66bb6a !important;
+    }
+
+    .badge.bg-warning {
+        background-color: #ffee58 !important;
+        color: #333;
+    }
+
+    .badge.bg-danger {
+        background-color: #ef5350 !important;
+    }
+
+    .btn-info {
+        background-color: #29b6f6;
+        border: none;
+    }
+
+    .btn-info:hover {
+        background-color: #0288d1;
+    }
+
+    .logo-unila {
+    width: 32px;
+    height: 32px;
+    object-fit: contain;
+}
+
+.copyright-link {
+    color: #90caf9;
+    font-size: 0.85rem;
+    text-decoration: none;
+}
+.copyright-link:hover {
+    color: #ffffff;
+    text-decoration: underline;
+}
+
+</style>
+
 </head>
 <body>
 
 <div class="sidebar">
-    <h4>Situs Laporan</h4>
-    <p>{{ strtoupper(Auth::user()->name ?? 'Pengguna Umum') }}</p>
-    <p class="small text-muted">{{ Auth::user()->email ?? 'Tidak Login' }}</p>
+    <div class="d-flex align-items-center mb-4">
+        <img src="{{ asset('attachments/Logo_UnivLampung.png') }}" alt="Logo Unila" class="logo-unila me-2">
+        <h4 class="mb-0">Situs Laporan Unila</h4>
+    </div>
+    <p>{{ strtoupper('Pengguna Umum') }}</p>
     <a href="{{ route('user.dashboard') }}"><i class="bi bi-house"></i> Dashboard</a>
     <a href="{{ route('lapor.create') }}"><i class="bi bi-plus-circle"></i> Buat Ticket</a>
+    <div class="mt-auto text-center pt-4">
+        <a href="https://tik.unila.ac.id/" target="_blank" class="copyright-link">
+            © 2025 UPT TIK Unila
+        </a>
+    </div>
 </div>
 
 <div class="main">
+    <div class="greet">
+    <p>Selamat Datang di Layanan Lapor Situs UPT TIK Universitas Lampung.</p>
+    </div>
     <!-- Form Pencarian -->
     <div class="card mb-4">
         <div class="card-body">
-            <h5 class="mb-3">Cari Tiket</h5>
+            <h5 class="mb-3">Cari Tiket</h5> 
             <form method="GET" action="{{ url()->current() }}" class="row g-2">
                 <div class="col-md-10">
                     <input type="text" name="search" class="form-control"
@@ -128,9 +255,10 @@
         <h5 class="modal-title" id="detailModalLabel">Detail Tiket</h5>
         <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Tutup"></button>
       </div>
-      <div class="modal-body">
+      <div class="modal-body text-dark">
         <p><strong>Nomor Tiket:</strong> <span id="detail_nomor"></span></p>
         <p><strong>Tanggal Dibuat:</strong> <span id="detail_tanggal"></span></p>
+        <p><strong>Tiket Selesai Pada:</strong> <span id="detail_selesai"></span></p>
         <p><strong>Kategori:</strong> <span id="detail_kategori"></span></p>
         <p><strong>Prioritas:</strong> <span id="detail_prioritas"></span></p>
         <p><strong>Status:</strong> <span id="detail_status"></span></p>
@@ -138,6 +266,7 @@
         <p><strong>Okupasi:</strong> <span id="detail_okupasi"></span></p>
         <p><strong>Link Situs:</strong> <a href="#" id="detail_link" target="_blank">Lihat</a></p>
         <p><strong>Catatan:</strong> <span id="detail_deskripsi"></span></p>
+        <p><strong>Catatan Admin:</strong> <span id="detail_note"></span></p>
         <div id="lampiran_section">
           <p><strong>Lampiran:</strong></p>
           <a href="#" id="detail_lampiran" target="_blank">Lihat Lampiran</a>
@@ -164,6 +293,12 @@ document.addEventListener('DOMContentLoaded', function () {
         document.getElementById('detail_status').innerText = ticket.status.replaceAll('_', ' ').toUpperCase();
         document.getElementById('detail_email').innerText = ticket.email || '-';
         document.getElementById('detail_deskripsi').innerText = ticket.description || '-';
+        document.getElementById('detail_note').innerText = ticket.assignment?.note || '(Belum ada catatan)';
+
+        const selesai = ticket.assignment?.finished_at;
+        document.getElementById('detail_selesai').innerText = selesai
+            ? new Date(selesai).toLocaleString('id-ID')
+            : '(Belum selesai)';
 
         // Okupasi / Fakultas
         const fakultas = ticket.faculty?.name || ticket.faculty_name || '-';
@@ -177,7 +312,7 @@ document.addEventListener('DOMContentLoaded', function () {
         const image = document.getElementById('lampiran_image');
 
         if (ticket.attachment) {
-            const fileUrl = `/storage/${ticket.attachment}`;
+            const fileUrl = `/${ticket.attachment}`;
             fileLink.href = fileUrl;
             fileLink.innerText = 'Lihat Lampiran';
 
