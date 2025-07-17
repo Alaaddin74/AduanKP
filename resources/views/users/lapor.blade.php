@@ -10,80 +10,191 @@
   <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
 
   <style>
-    body { background-color: #f4f6f9; }
-    .sidebar {
-      height: 100vh;
-      background-color: #343a40;
-      color: white;
-      padding: 20px;
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 250px;
+  body {
+    background-color: #1a3365; /* Biru tua sebagai latar utama */
+    color: white;
+    font-family: 'Segoe UI', sans-serif;
+  }
+
+  .sidebar {
+    height: 100vh;
+    background: linear-gradient(to bottom, #003366, #0055a5);
+    color: white;
+    padding: 20px;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 250px;
+
+    display: flex;
+    flex-direction: column;
+}
+
+    .sidebar h4 {
+        margin-bottom: 30px;
+        color: white;
     }
-    .sidebar h4 { margin-bottom: 30px; }
+
+    .sidebar p {
+        margin-bottom: 0.2rem;
+        color: #cfd8dc;
+    }
+
+    .sidebar .small {
+        font-size: 0.8rem;
+        color: #90caf9;
+    }
+
     .sidebar a {
-      display: block;
-      color: #ccc;
-      text-decoration: none;
-      margin: 15px 0;
+        display: block;
+        color: #bbdefb;
+        text-decoration: none;
+        margin: 15px 0;
+        font-weight: 500;
     }
-    .sidebar a:hover { color: #fff; }
-    .main {
-      margin-left: 270px;
-      padding: 30px;
+
+    .sidebar a i {
+        margin-right: 8px;
     }
-    .container-report {
-      background: #fff;
-      padding: 30px;
-      max-width: 800px;
-      margin: auto;
-      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+
+    .sidebar a:hover {
+        color: #ffffff;
     }
-    label { margin-top: 15px; margin-bottom: 5px; }
-    .radio-group {
-      display: flex;
-      gap: 20px;
-      margin-bottom: 10px;
-    }
-    .lampiran { margin-top: 20px; }
-    .preview {
-      margin-top: 10px;
-      width: 200px;
-      height: 150px;
-      background: #e9ecef;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      text-align: center;
-      border: 1px solid #ced4da;
-      border-radius: 4px;
-    }
-    .btn-reset, .btn-submit, .btn-back {
-      padding: 10px 15px;
-      border: none;
-    }
-    .btn-submit {
-      background: #28a745;
-      color: white;
-    }
-    .btn-back {
-      background: #6c757d;
-      color: white;
-      text-decoration: none;
-    }
-    .note { font-size: 12px; color: #666; margin-top: 5px; }
-  </style>
+    
+  .main {
+    margin-left: 270px;
+    padding: 30px;
+    background-color: #1a3365;
+    min-height: 100vh;
+  }
+
+  .container-report {
+    background: white; 
+    padding: 30px;
+    max-width: 800px;
+    margin: auto;
+    box-shadow: 0 0 15px rgba(0,0,0,0.2);
+    border-radius: 8px;
+    color: #333;
+  }
+
+  .container-report h3 {
+    color: #333;
+  }
+
+  label {
+    margin-top: 15px;
+    margin-bottom: 5px;
+    font-weight: 600;
+  }
+
+  .form-control,
+  .form-select,
+  textarea {
+    background-color: #f8f9fa;
+    color: #212529;
+    border: 1px solid #ced4da;
+  }
+
+  .radio-group {
+    display: flex;
+    gap: 20px;
+    margin-bottom: 10px;
+  }
+
+  .radio-group label {
+    font-weight: normal;
+  }
+
+  .lampiran {
+    margin-top: 20px;
+  }
+
+  .preview {
+    margin-top: 10px;
+    width: 200px;
+    height: 150px;
+    background: #e9ecef;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    border: 1px solid #ced4da;
+    border-radius: 4px;
+    overflow: hidden;
+  }
+
+  .btn-submit {
+    background: #3b7ddd;
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    font-weight: bold;
+    border-radius: 4px;
+  }
+
+  .btn-submit:hover {
+    background: #2f65b3;
+  }
+
+  .btn-back {
+    background: #6c757d;
+    color: white;
+    text-decoration: none;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 4px;
+  }
+
+  .btn-back:hover {
+    background: #5a6268;
+  }
+
+  .note {
+    font-size: 12px;
+    color: #666;
+    margin-top: 5px;
+  }
+
+  .alert-danger {
+    background-color: #f8d7da;
+    color: #721c24;
+    border: 1px solid #f5c6cb;
+  }
+
+  .logo-unila {
+    width: 32px;
+    height: 32px;
+    object-fit: contain;
+}
+
+.copyright-link {
+    color: #90caf9;
+    font-size: 0.85rem;
+    text-decoration: none;
+}
+.copyright-link:hover {
+    color: #ffffff;
+    text-decoration: underline;
+}
+</style>
+
 </head>
 <body>
 
-<!-- Sidebar -->
 <div class="sidebar">
-  <h4>Situs Laporan</h4>
-  <p>{{ strtoupper(Auth::user()->name ?? 'Pengguna Umum') }}</p>
-  <p class="small text-muted">{{ Auth::user()->email ?? 'Tidak Login' }}</p>
-  <a href="{{ route('user.dashboard') }}"><i class="bi bi-house"></i> Dashboard</a>
-  <a href="{{ route('lapor.create') }}"><i class="bi bi-plus-circle"></i> Buat Ticket</a>
+    <div class="d-flex align-items-center mb-4">
+        <img src="{{ asset('attachments/Logo_UnivLampung.png') }}" alt="Logo Unila" class="logo-unila me-2">
+        <h4 class="mb-0">Situs Laporan Unila</h4>
+    </div>
+    <p>{{ strtoupper('Pengguna Umum') }}</p>
+    <a href="{{ route('user.dashboard') }}"><i class="bi bi-house"></i> Dashboard</a>
+    <a href="{{ route('lapor.create') }}"><i class="bi bi-plus-circle"></i> Buat Ticket</a>
+    <div class="mt-auto text-center pt-4">
+        <a href="https://tik.unila.ac.id/" target="_blank" class="copyright-link">
+            © 2025 UPT TIK Unila
+        </a>
+    </div>
 </div>
 
 <!-- Main Form -->
@@ -155,7 +266,6 @@
         <div class="note">File .JPEG, .JPG, .PNG maksimal 2 MB</div>
         <div class="preview">Preview Gambar</div>
       </div>
-
       <!-- Tombol Aksi -->
       <div class="d-flex justify-content-between mt-4">
         <a href="{{ route('user.dashboard') }}" class="btn-back btn">← Kembali</a>
@@ -198,6 +308,5 @@
     }
   }
 </script>
-
 </body>
 </html>
