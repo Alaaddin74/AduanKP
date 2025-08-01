@@ -15,8 +15,9 @@ class Ticket extends Model
     protected $fillable = [
         'ticket_number',
         'user_id',
-        'category',
-        'priority',
+        'name',
+        'no_hp',
+        'category_id',
         'site_link',
         'email',
         'faculty_id',
@@ -51,4 +52,9 @@ class Ticket extends Model
     {
         return $this->hasMany(TicketAssignment::class);
     }
+
+    public function category()
+{
+    return $this->belongsTo(category::class);
+}
 }

@@ -24,7 +24,7 @@
         <div class="min-w-[180px]">
             <select wire:model="facultyFilter"
                 class="w-full px-4 py-2 text-sm rounded-xl bg-white dark:bg-blue-900 border border-blue-300 dark:border-blue-600 text-blue-900 dark:text-white focus:ring-2 focus:ring-blue-500 focus:outline-none shadow-sm">
-                <option value="">🏫 All Faculties</option>
+                <option value="">🏫 All Occupations</option>
                 @foreach ($faculties as $faculty)
                     <option value="{{ $faculty->id }}">{{ $faculty->name }}</option>
                 @endforeach
@@ -56,13 +56,13 @@
                 <!-- Table Header -->
                 <thead class="bg-blue-100 dark:bg-blue-800 text-blue-600 dark:text-white sticky top-0 z-10">
                     <tr>
-                        @foreach (['Ticket #', 'User', 'Faculty'] as $label)
+                        @foreach (['Ticket #', 'User', 'Occupation'] as $label)
                             <th class="px-4 py-3 text-left font-semibold uppercase tracking-wider">
                                 {{ $label }}
                             </th>
                         @endforeach
 
-                        @foreach (['assigned_to' => 'Assigned', 'priority' => 'Priority', 'status' => 'Status', 'created_at' => 'Created'] as $field => $label)
+                        @foreach (['assigned_to' => 'Assigned', 'status' => 'Status', 'created_at' => 'Created'] as $field => $label)
                             <th class="px-4 py-3 text-left font-semibold uppercase tracking-wider cursor-pointer hover:text-indigo-600 dark:hover:text-indigo-400 transition"
                                 wire:click="sort('{{ $field }}')">
                                 <div class="flex items-center gap-1">
@@ -92,7 +92,7 @@
                                 #{{ $ticket->ticket_number }}
                             </td>
                             <td class="px-4 py-3 whitespace-nowrap text-gray-900 dark:text-gray-100">
-                                {{ $ticket->user->name ?? 'Umum' }}
+                                {{ $ticket->user->name ?? $ticket->name ?? 'Unknown User' }}
                             </td>
                             <td class="px-4 py-3 whitespace-nowrap">
                                 {{ $ticket->faculty->name ?? '-' }}
@@ -113,15 +113,7 @@
                                     </span>
                                 @endif
                             </td>
-                            <td class="px-4 py-3 whitespace-nowrap">
-                                <span
-                                    class="px-2 py-0.5 rounded-full text-xs font-medium capitalize
-                                    @if ($ticket->priority === 'high') bg-red-100 text-red-800 dark:bg-red-900 dark:text-red-200
-                                    @elseif ($ticket->priority === 'medium') bg-yellow-100 text-yellow-800 dark:bg-yellow-900 dark:text-yellow-200
-                                    @else bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200 @endif">
-                                    {{ $ticket->priority }}
-                                </span>
-                            </td>
+
                             <td class="px-4 py-3 whitespace-nowrap">
                                 <span
                                     class="px-2 py-0.5 rounded-full text-xs font-medium capitalize

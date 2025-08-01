@@ -2,6 +2,7 @@
 
 namespace App\Livewire\Admin;
 
+use App\Models\Category;
 use App\Models\Faculty;
 use App\Models\Ticket;
 use Illuminate\Support\Facades\Auth;
@@ -14,38 +15,33 @@ class TicketCreate extends Component
     use WithFileUploads;
 
     public $ticket_number;
+    // #[Validate('required|exists:categories,id')]
     public $category;
-    public $priority = 'low';
+    public $name;
+    public $no_hp;
     public $site_link;
     public $email;
     public $faculty_id;
-    // #[Validate('image|max:1024')]
     public $attachment;
     public $description;
-
     public $faculties;
-
-    public array $categoryOptions = [
-        'konten_tidak_pantas' => 'Konten Tidak Pantas',
-        'menghapus_index' => 'Menghapus Index',
-        'pornografi' => 'Pornografi',
-        'judi_online' => 'Judi Online',
-        'lainnya' => 'Lainnya',
-    ];
+    public $categories;
 
     public function mount()
     {
         $this->ticket_number = 'TCK-' . strtoupper(uniqid());
         $this->faculties = Faculty::all();
-        $this->categoryOptions;
+        $this->categories = Category::all()->pluck('name', 'id')->toArray();
     }
 
     public function save()
     {
         $this->validate([
-            'category' => 'required|string|max:255',
-            'priority' => 'required|in:low,medium,high',
-            'site_link' => 'nullable|url',
+            'category' => 'required|exists:categories,id',
+            'site_link' => 'required|url',
+            'name' => 'required|string|max:255',
+            'no_hp' => 'required|string|regex:/^[0-9]+$/|max:15',
+            'email' => 'required|email|max:255',
             'faculty_id' => 'nullable|exists:faculties,id',
             'attachment' => 'required|file|mimes:jpg,jpeg,png,pdf|max:2048', // 2MB max
             'description' => 'required|string|max:1000',
@@ -58,11 +54,12 @@ class TicketCreate extends Component
         Ticket::create([
             'ticket_number' => $this->ticket_number,
             'user_id' => Auth::id(),
-            'category' => $this->category,
-            'priority' => $this->priority,
+            'name' => $this->name,
+            'no_hp' => $this->no_hp,
+            'category_id' => $this->category,
             'site_link' => $this->site_link,
             'faculty_id' => $this->faculty_id,
-            'email' => Auth::user()->email,
+            'email' => $this->email,
             'attachment' => $path,
             'description' => $this->description,
             'status' => 'submitted',

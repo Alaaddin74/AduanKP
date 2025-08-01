@@ -15,75 +15,63 @@
 
     <form wire:submit.prevent="save" class="space-y-5">
         <!-- Category -->
-        <div>
-            <label class="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-1">Category</label>
-            <select wire:model.defer="category"
-                class="w-full rounded-md border-gray-300 dark:border-gray-700 dark:bg-gray-800 dark:text-white shadow-sm">
-                <option value="">-- Select a Category --</option>
-                @foreach ($categoryOptions as $value => $label)
-                    <option value="{{ $value }}">{{ $label }}</option>
-                @endforeach
-            </select>
-            @error('category')
-                <span class="text-sm text-red-500">{{ $message }}</span>
-            @enderror
-        </div>
+        <flux:select wire:model.defer="category" label="Category" placeholder="Select a category">
+            <flux:select.option value=""> Select a Category </flux:select.option>
+            @foreach ($categories as $value => $label)
+                <flux:select.option value="{{ $value }}">{{ $label }}</flux:select.option>
+            @endforeach
+        </flux:select>
 
-        <!-- Priority -->
-        <div>
-            <label class="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-1">Priority</label>
-            <flux:radio.group wire:model.defer="priority" label="Select Priority" variant="segmented">
-                <flux:radio label="Low" value="low" />
-                <flux:radio label="Medium" value="medium" />
-                <flux:radio label="High" value="high" />
-            </flux:radio.group>
-            @error('priority')
+
+
+        <flux:field>
+            <flux:input wire:model.defer="name" label="Nama" placeholder="Enter a your name" />
+            @error('name')
                 <span class="text-sm text-red-500">{{ $message }}</span>
             @enderror
-        </div>
+        </flux:field>
+
+        <!-- email -->
+        <flux:field>
+            <flux:input wire:model.defer="email" type="email" label="Email" placeholder="Enter your email" />
+            @error('email')
+                <span class="text-sm text-red-500">{{ $message }}</span>
+            @enderror
+        </flux:field>
+
+        <flux:field>
+            <flux:input wire:model.defer="no_hp" label="No HP" placeholder="Enter a your phone number" />
+            @error('no_hp')
+                <span class="text-sm text-red-500">{{ $message }}</span>
+            @enderror
+        </flux:field>
+
 
         <!-- Site Link -->
+
         <div>
-            <flux:input wire:model.defer="site_link" type="url" label="Site Link (Optional)" />
+            <flux:input wire:model.defer="site_link" type="url" label="Site Link" placeholder="Enter Link" />
             @error('site_link')
                 <span class="text-sm text-red-500">{{ $message }}</span>
             @enderror
         </div>
 
         <!-- Faculty -->
-        <div>
-            <label class="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-1">Faculty</label>
-            <select wire:model.defer="faculty_id"
-                class="w-full rounded-md border-gray-300 dark:border-gray-700 dark:bg-gray-800 dark:text-white shadow-sm">
-                <option value="">-- Select Faculty --</option>
-                @foreach ($faculties as $faculty)
-                    <option value="{{ $faculty->id }}">{{ $faculty->name }}</option>
-                @endforeach
-            </select>
+        <flux:select wire:model.defer="faculty_id" label="Faculty" placeholder="Select Faculty">
+            <flux:select.option value="">Select Faculty</flux:select.option>
+            @foreach ($faculties as $faculty)
+                <flux:select.option value="{{ $faculty->id }}">{{ $faculty->name }}</flux:select.option>
+            @endforeach
             @error('faculty_id')
                 <span class="text-sm text-red-500">{{ $message }}</span>
             @enderror
-        </div>
+        </flux:select>
 
-        <!-- Attachment -->
-        {{-- <div>
-            <label class="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-1">Attachment (Optional)</label>
-            <input type="file" wire:model="attachment"
-                class="w-full text-sm rounded-md border-gray-300 dark:border-gray-700 dark:bg-gray-800 dark:text-white" />
-            @error('attachment')
-                <span class="text-sm text-red-500">{{ $message }}</span>
-            @enderror
-        </div> --}}
         <div>
             <flux:input wire:model="attachment" type="file" accept="image/*" />
             @error('attachment')
                 <span class="text-sm text-red-500">{{ $message }}</span>
             @enderror
-
-            @if ($attachment)
-                attachment Preview:
-                <img src="{{ $attachment->temporaryUrl() }}">
-            @endif
         </div>
 
         <!-- Description -->
@@ -93,6 +81,17 @@
                 <span class="text-sm text-red-500">{{ $message }}</span>
             @enderror
         </div>
+
+        <!-- Attachment small Preview -->
+        @if ($attachment)
+            <div class="mt-2">
+                <span class="text-sm text-gray-600 dark:text-gray-400">Attachment Preview:</span>
+            </div>
+            {{-- Display a small preview of the attachment --}}
+            <div class="mt-2">
+                <img src="{{ $attachment->temporaryUrl() }}" class="max-w-xs rounded-md shadow-sm">
+            </div>
+        @endif
 
         <!-- Submit -->
         <div class="text-right">

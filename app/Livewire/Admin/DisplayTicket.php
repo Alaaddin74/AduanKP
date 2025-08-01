@@ -13,8 +13,9 @@ class DisplayTicket extends Component
     public $ticket;
     public $ticketId;
     public $selectedAdminId;
-    // public $selectedTicket;
     public $admins;
+    public $name, $no_hp, $email;
+
 
     public function mount($ticketId)
     {
@@ -35,6 +36,10 @@ class DisplayTicket extends Component
         if (!$this->ticket) {
             abort(404, 'Ticket not found');
         }
+
+        $this->name = $this->ticket->name;
+        $this->no_hp = $this->ticket->no_hp;
+        $this->email = $this->ticket->email;
     }
 
     public function goBack()
@@ -60,6 +65,10 @@ class DisplayTicket extends Component
                 ]
             );
 
+            Ticket::where('id', $this->ticket->id)->update([
+                'status' => 'in_progress', // Update status to in_progress
+            ]);
+
             // Reload the ticket to show updated assignment
             $this->loadTicket();
 
@@ -80,7 +89,8 @@ class DisplayTicket extends Component
     }
 
 
-    public function getSelectedAdminNameProperty(){
+    public function getSelectedAdminNameProperty()
+    {
         return User::find($this->selectedAdminId)?->name;
     }
 

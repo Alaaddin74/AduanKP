@@ -110,4 +110,38 @@ class UmumController extends Controller
 
        return redirect()->back()->with('success', 'Laporan berhasil dikirim. Nomor tiket Anda: #' . $ticket->ticket_number);
     }
+<<<<<<< HEAD
+=======
+
+
+    // Simpan lampiran
+    $lampiranPath = null;
+if ($request->hasFile('lampiran') && $request->file('lampiran')->isValid()) {
+    $file = $request->file('lampiran');
+    $filename = time() . '_' . $file->getClientOriginalName();
+    $file->move(public_path('attachments'), $filename);
+    // jika ingin menyimpan di storage saat meggunakan cpanel
+    // $destinationPath = base_path('../public_html/attachments');
+    // $file->move($destinationPath, $filename);
+    $lampiranPath =  $filename;
+}
+
+    // Simpan ke database
+    $ticket = Ticket::create([
+        'ticket_number' => 'TIC-' . strtoupper(Str::random(8)),
+        'category'      => $request->keluhan,
+        'priority'      => $request->prioritas,
+        'site_link'     => $request->link,
+        'faculty_id'    => $facultyId,
+        'faculty_name'  => $facultyName,
+        'email'         => $request->email,
+        'attachment'    => $lampiranPath,
+        'status'        => 'submitted',
+        'description'   => $request->description,
+    ]);
+
+    return redirect()->route('user.dashboard', ['email' => $ticket->email])
+                     ->with('success', 'Laporan berhasil dikirim!');
+}
+>>>>>>> origin/test-branch
 }

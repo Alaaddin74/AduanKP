@@ -181,7 +181,7 @@ class TicketTable extends Component
             'total' => $baseQuery->count(),
             'in_progress' => (clone $baseQuery)->where('status', 'in_progress')->count(),
             'completed' => (clone $baseQuery)->where('status', 'done')->count(),
-            'high_priority' => (clone $baseQuery)->where('priority', 'high')->count(),
+            // 'high_priority' => (clone $baseQuery)->where('priority', 'high')->count(),
         ];
     }
 

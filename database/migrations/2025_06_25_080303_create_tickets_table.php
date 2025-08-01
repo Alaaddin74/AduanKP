@@ -17,16 +17,11 @@ return new class extends Migration
 
             // Jika kamu tidak menggunakan Auth::user(), maka kolom user_id bisa dihapus.
             $table->foreignId('user_id')->nullable()->constrained()->onDelete('cascade');
+            $table->string('name');
+            $table->string('no_hp');
+            $table->foreignId('category_id')->constrained()->onDelete('cascade');
 
-            $table->enum('category', [
-                'konten_tidak_pantas',
-                'menghapus_index',
-                'pornografi',
-                'judi_online',
-                'lainnya'
-            ]);
-
-            $table->enum('priority', ['low', 'medium', 'high']);
+            // $table->enum('priority', ['low', 'medium', 'high']);
             $table->string('site_link')->nullable();
 
             // Ganti faculty_id menjadi manual input: faculty_name / okupasi

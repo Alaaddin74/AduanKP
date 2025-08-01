@@ -23,7 +23,7 @@ class TicketStatistics extends Component
     public $resolutionRate;
 
     // Priority & Assignment Statistics
-    public $highPriorityCount;
+    // public $highPriorityCount;
     public $activeAssignments;
     public $overdueCount;
 
@@ -50,7 +50,7 @@ class TicketStatistics extends Component
         $this->resolutionRate = $this->calculateResolutionRate();
 
         // Priority & Assignment Statistics
-        $this->highPriorityCount = Ticket::where('priority', 'high')->count();
+        // $this->highPriorityCount = Ticket::where('priority', 'high')->count();
         $this->activeAssignments = TicketAssignment::whereNull('finished_at')->count();
         $this->overdueCount = $this->calculateOverdueTickets();
     }
