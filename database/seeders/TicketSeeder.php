@@ -15,8 +15,7 @@ class TicketSeeder extends Seeder
     {
         $faker = \Faker\Factory::create();
 
-        $categories = ['konten_tidak_pantas', 'menghapus_index', 'lainnya'];
-        $priorities = ['low', 'medium', 'high'];
+
         $statuses = ['submitted', 'in_progress', 'done', 'rejected'];
 
         for ($i = 0; $i < 30; $i++) {
@@ -26,10 +25,12 @@ class TicketSeeder extends Seeder
             Ticket::create([
                 'ticket_number' => 'TCK-' . strtoupper(Str::random(6)),
                 'user_id' => User::inRandomOrder()->value('id'),
-                'category' => $faker->randomElement($categories),
-                'priority' => $faker->randomElement($priorities),
                 'site_link' => $faker->optional()->url,
                 'faculty_id' => Faculty::inRandomOrder()->value('id'),
+                'name' => $faker->name,
+                'no_hp' => $faker->phoneNumber,
+                'category_id' => \App\Models\Category::inRandomOrder()->value('id'),
+                'email' => $faker->optional()->safeEmail,
                 'attachment' => $faker->optional()->imageUrl(),
                 'status' => $status,
                 'description' => $faker->paragraph,

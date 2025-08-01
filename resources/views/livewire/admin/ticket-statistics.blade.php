@@ -88,13 +88,13 @@
     <div>
         <h2 class="text-lg font-semibold text-gray-700 dark:text-gray-200 mb-4">Priorities & Alerts</h2>
         <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-            @include('components.stats-card', [
+            {{-- @include('components.stats-card', [
                 'title' => 'High Priority',
                 'count' => $highPriorityCount,
                 'subtitle' => 'Urgent tickets',
                 'color' => 'orange',
                 'icon' => 'alert'
-            ])
+            ]) --}}
 
             @include('components.stats-card', [
                 'title' => 'Active Assignments',

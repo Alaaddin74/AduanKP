@@ -24,12 +24,7 @@
             <div class="bg-gray-50 dark:bg-gray-800 px-4 py-2 border-b border-gray-200 dark:border-gray-700">
                 <div class="flex items-center justify-between">
                     <div class="flex items-center space-x-2">
-                        <span class="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium
-                            @if ($ticket->priority === 'high') bg-red-100 text-red-800
-                            @elseif($ticket->priority === 'medium') bg-yellow-100 text-yellow-800
-                            @else bg-green-100 text-green-800 @endif">
-                            {{ ucfirst($ticket->priority) }} Priority
-                        </span>
+
                         <span class="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium
                             @if ($ticket->status === 'open') bg-blue-100 text-blue-800
                             @elseif($ticket->status === 'in_progress') bg-yellow-100 text-yellow-800
@@ -50,11 +45,12 @@
                 <div class="grid grid-cols-2 gap-4 mb-4">
                     @foreach ([
                         'Ticket Number' => $ticket->ticket_number,
-                        'Category' => $ticket->category,
-                        'Faculty' => $ticket->faculty ? $ticket->faculty->name : 'Not Specified',
+                        'Category' => $ticket->category->name,
+                        'Occupation' => $ticket->faculty ? $ticket->faculty->name : 'Not Specified',
                         'User  Email' => $ticket->email ?? 'Not Available',
-                        'User  Name' => $ticket->user ? $ticket->user->name : 'Pengguna Umum',
-                        'Ticket Date' => $ticket->created_at->format('d M Y'),
+                        'User  Name' => $ticket->name ?? 'Pengguna Umum',
+                        'Phone Number' => $ticket->no_hp ?? '-',
+                        // 'Ticket Date' => $ticket->created_at->format('d M Y'),
                     ] as $label => $value)
                         <div class="bg-gray-50 dark:bg-gray-800 p-2 rounded-lg">
                             <label class="block text-xs font-medium text-gray-700 dark:text-gray-300 mb-1">{{ $label }}</label>
@@ -76,20 +72,14 @@
                 <!-- Assignment Actions -->
                 <div class="flex flex-col md:flex-row items-center justify-between w-full mt-4 gap-2">
                     <div class="w-full md:w-1/2">
-                        <label for="admin_id" class="block text-xs font-medium text-gray-800 dark:text-gray-200 mb-1">Assign To</label>
                         <div class="relative">
-                            <select wire:model.defer="selectedAdminId" id="admin_id"
-                                class="block w-full appearance-none rounded-md border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 px-2 py-1 text-xs text-gray-900 dark:text-gray-100 shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-1 focus:ring-indigo-500">
-                                <option value="">-- Select Admin --</option>
+                            <flux:select wire:model.defer="selectedAdminId" label="Select Admin" placeholder="Select Admin">
+                                <flux:select.option value="">Select Admin</flux:select.option>
                                 @foreach ($admins as $admin)
-                                    <option value="{{ $admin->id }}">{{ $admin->name }} ({{ $admin->email }})</option>
+                                    <flux:select.option value="{{ $admin->id }}">{{ $admin->name }} ({{ $admin->email }})</flux:select.option>
                                 @endforeach
-                            </select>
-                            <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-2 text-gray-400 dark:text-gray-500">
-                                <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
-                                </svg>
-                            </div>
+                            </flux:select>
+
                         </div>
                     </div>
 

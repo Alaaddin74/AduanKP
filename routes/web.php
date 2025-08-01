@@ -8,6 +8,7 @@ use App\Http\Controllers\Umum\UmumController;
 use App\Livewire\Admin\DisplayTicket;
 use App\Livewire\Admin\EditTicket;
 use App\Livewire\Admin\TicketCreate;
+use App\Livewire\Settings\AddData;
 
 Route::get('/', function () {
     return view('welcome');
@@ -35,6 +36,7 @@ Route::middleware(['auth'])->group(function () {
     Route::get('settings/profile', Profile::class)->name('settings.profile');
     Route::get('settings/password', Password::class)->name('settings.password');
     Route::get('settings/appearance', Appearance::class)->name('settings.appearance');
+    Route::get('settings/add_data', AddData::class)->name('settings.add_data');
 });
 
 

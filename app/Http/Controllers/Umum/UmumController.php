@@ -80,7 +80,10 @@ if ($request->hasFile('lampiran') && $request->file('lampiran')->isValid()) {
     $file = $request->file('lampiran');
     $filename = time() . '_' . $file->getClientOriginalName();
     $file->move(public_path('attachments'), $filename);
-    $lampiranPath = 'attachments/' . $filename;
+    // jika ingin menyimpan di storage saat meggunakan cpanel
+    // $destinationPath = base_path('../public_html/attachments');
+    // $file->move($destinationPath, $filename);
+    $lampiranPath =  $filename;
 }
 
     // Simpan ke database
