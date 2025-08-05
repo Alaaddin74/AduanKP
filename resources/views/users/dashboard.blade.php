@@ -12,7 +12,7 @@
 
     <style>
         body {
-            background-image: linear-gradient(rgba(0, 51, 102, 0.4), rgba(0, 51, 102, 0.4)), url('/attachments/a.png');
+            background-image: linear-gradient(rgba(0, 51, 102, 0.4), rgba(0, 51, 102, 0.4)), url('/attachments/b.png');
             background-size: cover;
             background-position: center;
             background-repeat: no-repeat;
@@ -246,7 +246,7 @@
                             <th>No</th>
                             <th>Nomor Tiket</th>
                             <th>Nama</th>
-                            <th>Okupasi</th>
+                            <th>Status</th>
                             <th>Nomor HP</th>
                             <th>Tanggal</th>
                             <th>Kategori</th>
@@ -262,10 +262,10 @@
                             <td>{{ $index + 1 }}</td>
                             <td><span class="badge bg-info">#{{ $ticket->ticket_number }}</span></td>
                             <td>{{ $ticket->name ?? '-' }}</td>
-                            <td>{{ $ticket->faculty_name ?? '-' }}</td>
-                            <td>{{ $ticket->phone_number ?? '-' }}</td>
-                            <td>{{ $ticket->created_at->format('d-m-Y H:i') }}</td>
-                            <td>{{ ucfirst(str_replace('_', ' ', $ticket->category)) }}</td>
+                            <td>{{ $ticket->faculty->name ?? '-' }}</td>
+                            <td>{{ $ticket->no_hp ?? '-' }}</td>
+                            <td>{{ $ticket->created_at->timezone('Asia/Jakarta')->format('d-m-Y H:i') }}</td>
+                            <td>{{ $ticket->category->name ?? '-' }}</td>
                             <td>
                                 @if ($ticket->status == 'done')
                                     <span class="badge bg-success">✔ Done</span>
@@ -312,7 +312,7 @@
                 <p><strong>Tanggal Dibuat:</strong> <span id="detail_tanggal"></span></p>
                 <p><strong>Tiket Selesai Pada:</strong> <span id="detail_selesai"></span></p>
                 <p><strong>Nama Pelapor:</strong> <span id="detail_nama"></span></p>
-                <p><strong>Okupasi:</strong> <span id="detail_okupasi"></span></p>
+                <p><strong>Status:</strong> <span id="detail_okupasi"></span></p>
                 <p><strong>Nomor HP:</strong> <span id="detail_hp"></span></p>
                 <p><strong>Email Pelapor:</strong> <span id="detail_email"></span></p>
                 <p><strong>Kategori:</strong> <span id="detail_kategori"></span></p>
@@ -346,8 +346,8 @@
             document.getElementById('detail_nomor').innerText = '#' + ticket.ticket_number;
             document.getElementById('detail_tanggal').innerText = new Date(ticket.created_at).toLocaleString('id-ID');
             document.getElementById('detail_nama').innerText = ticket.name || '-';
-            document.getElementById('detail_hp').innerText = ticket.phone_number || '-';
-            document.getElementById('detail_kategori').innerText = ticket.category.replaceAll('_', ' ');
+            document.getElementById('detail_hp').innerText = ticket.no_hp || '-';
+            document.getElementById('detail_kategori').innerText = ticket.category?.name || '-';
             document.getElementById('detail_status').innerText = ticket.status.replaceAll('_', ' ').toUpperCase();
             document.getElementById('detail_email').innerText = ticket.email || '-';
             document.getElementById('detail_deskripsi').innerText = ticket.description || '-';
@@ -355,7 +355,7 @@
             document.getElementById('detail_selesai').innerText = ticket.assignment?.finished_at
                 ? new Date(ticket.assignment.finished_at).toLocaleString('id-ID')
                 : '(Belum selesai)';
-            document.getElementById('detail_okupasi').innerText = ticket.faculty?.name || ticket.faculty_name || '-';
+            document.getElementById('detail_okupasi').innerText = ticket.faculty?.name || '-';
             document.getElementById('detail_link').href = ticket.site_link;
             document.getElementById('detail_link').innerText = ticket.site_link;
 

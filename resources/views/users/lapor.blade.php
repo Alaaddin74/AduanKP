@@ -73,7 +73,7 @@
     }
 
     .main {
-      background-image: linear-gradient(rgba(0, 51, 102, 0.4), rgba(0, 51, 102, 0.4)), url('/attachments/a.png');
+      background-image: linear-gradient(rgba(0, 51, 102, 0.4), rgba(0, 51, 102, 0.4)), url('/attachments/b.png');
       background-size: cover;
       background-position: center;
       background-repeat: no-repeat;
@@ -331,31 +331,31 @@
         <label for="nama">Nama<span style="color: red;">*</span></label>
         <input type="text" name="name" class="form-control" required>
         
-        <label for="okupasi">Okupasi <span style="color: red;">*</span></label>
-        <select name="okupasi" id="okupasi" class="form-select" required onchange="toggleLainnyaBox(this.value)">
-          <option value="">-- Pilih Okupasi --</option>
-            <option value="mahasiswa">Mahasiswa</option>
-            <option value="dosen">Dosen</option>
-            <option value="tendik">Tenaga Kependidikan</option>
-            <option value="umum">Pengguna Umum</option>
-        </select>
+        <label for="faculty_id" class="form-label">Status<span style="color: red;">*</span></label>
+        <select name="faculty_id" id="faculty" class="form-select" required>
+          <option value="">-- Pilih Status --</option>
+            @foreach($faculties as $faculty)
+              <option value="{{ $faculty->id }}">{{ $faculty->name }}</option>
+            @endforeach
+         </select>
 
-        <label for="no  _hp">No HP</label>
-        <input type="text" name="phone_number" class="form-control">
+        <label for="no_hp">No HP</label>
+        <input type="text" name="no_hp" class="form-control">
 
         <label for="email">Email <span style="color: red;">*</span></label>
         <input type="email" name="email" id="email" class="form-control" required>
 
-        <label for="keluhan">Kategori <span style="color: red;">*</span></label>
-        <select name="category" id="category" class="form-select" required>
+        <label for="category_id" class="form-label">Kategori<span style="color: red;">*</span></label>
+        <select name="category_id" id="category" class="form-select" required>
           <option value="">-- Pilih Kategori --</option>
-          <option value="konten_tidak_pantas">Konten Tidak Pantas</option>
-          <option value="menghapus_index">Menghapus Index</option>
-          <option value="pornografi">Pornografi</option>
-          <option value="judi_online">Judi Online</option>
-        </select>
-       <label for="link">Link Situs <span style="color: red;">*</span></label>
-        <input type="text" name="link" id="link" class="form-control" placeholder="https://example.com" required>
+            @foreach ($categories as $category)
+              <option value="{{ $category->id }}">{{ $category->name }}</option>
+            @endforeach
+         </select>
+         
+       <label for="site_link">Link Situs <span style="color: red;">*</span></label>
+        <input type="text" name="site_link" id="site_link" class="form-control" placeholder="https://example.com" required>
+
 
        <label for="description">Catatan <span style="color: red;">*</span></label>
         <textarea name="description" id="description" rows="4" class="form-control" required placeholder="Jelaskan secara rinci masalah Anda..."></textarea>
