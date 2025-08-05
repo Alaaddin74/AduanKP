@@ -7,20 +7,29 @@ use Livewire\Component;
 
 class AddData extends Component
 {
- public $faculties = [];
+    // Faculty properties
+    public $faculties = [];
     public $selectedFacultyId = '';
     public $facultyName = '';
-    public $showConfirmDelete = false;
+    public $showFacultyConfirmDelete = false;
+
+    // Category properties
+    public $categories = [];
+    public $selectedCategoryId = '';
+    public $categoryName = '';
+    public $showCategoryConfirmDelete = false;
 
     public function mount()
     {
         $this->loadFaculties();
+        $this->loadCategories();
     }
 
-    public function updatedSelectedFacultyId($id)
+    // Faculty methods
+    public function updatedSelectedFacultyId($value)
     {
-        if ($id) {
-            $faculty = Faculty::find($id);
+        if ($value) {
+            $faculty = Faculty::find($value);
             $this->facultyName = $faculty?->name ?? '';
         } else {
             $this->facultyName = '';
@@ -30,37 +39,37 @@ class AddData extends Component
     public function saveFaculty()
     {
         $this->validate([
-            'facultyName' => 'required|string|max:255',
+            'facultyName' => 'required|string|max:255|unique:faculties,name,'.$this->selectedFacultyId,
         ]);
 
         if ($this->selectedFacultyId) {
-            Faculty::find($this->selectedFacultyId)?->update([
+            Faculty::find($this->selectedFacultyId)->update([
                 'name' => $this->facultyName,
             ]);
+            session()->flash('faculty_message', 'Occupation updated successfully');
         } else {
             Faculty::create([
                 'name' => $this->facultyName,
             ]);
+            session()->flash('faculty_message', 'Occupation created successfully');
         }
 
-        $this->resetForm();
+        $this->resetFacultyForm();
         $this->loadFaculties();
     }
 
-    public function confirmDelete()
+    public function confirmFacultyDelete()
     {
-        if ($this->selectedFacultyId) {
-            $this->showConfirmDelete = true;
-        }
+        $this->showFacultyConfirmDelete = true;
     }
 
     public function deleteFaculty()
     {
-        Faculty::find($this->selectedFacultyId)?->delete();
-
-        $this->resetForm();
+        Faculty::find($this->selectedFacultyId)->delete();
+        $this->showFacultyConfirmDelete = false;
+        session()->flash('faculty_message', 'Occupation deleted successfully');
+        $this->resetFacultyForm();
         $this->loadFaculties();
-        $this->showConfirmDelete = false;
     }
 
     private function loadFaculties()
@@ -68,17 +77,72 @@ class AddData extends Component
         $this->faculties = Faculty::orderBy('name')->get();
     }
 
-    private function resetForm()
+    private function resetFacultyForm()
     {
         $this->selectedFacultyId = '';
         $this->facultyName = '';
     }
 
+    // Category methods
+    public function updatedSelectedCategoryId($value)
+    {
+        if ($value) {
+            $category = Category::find($value);
+            $this->categoryName = $category?->name ?? '';
+        } else {
+            $this->categoryName = '';
+        }
+    }
+
+    public function saveCategory()
+    {
+        $this->validate([
+            'categoryName' => 'required|string|max:255|unique:categories,name,'.$this->selectedCategoryId,
+        ]);
+
+        if ($this->selectedCategoryId) {
+            Category::find($this->selectedCategoryId)->update([
+                'name' => $this->categoryName,
+            ]);
+            session()->flash('category_message', 'Category updated successfully');
+        } else {
+            Category::create([
+                'name' => $this->categoryName,
+            ]);
+            session()->flash('category_message', 'Category created successfully');
+        }
+
+        $this->resetCategoryForm();
+        $this->loadCategories();
+    }
+
+    public function confirmCategoryDelete()
+    {
+        $this->showCategoryConfirmDelete = true;
+    }
+
+    public function deleteCategory()
+    {
+        Category::find($this->selectedCategoryId)->delete();
+        $this->showCategoryConfirmDelete = false;
+        session()->flash('category_message', 'Category deleted successfully');
+        $this->resetCategoryForm();
+        $this->loadCategories();
+    }
+
+    private function loadCategories()
+    {
+        $this->categories = Category::orderBy('name')->get();
+    }
+
+    private function resetCategoryForm()
+    {
+        $this->selectedCategoryId = '';
+        $this->categoryName = '';
+    }
+
     public function render()
     {
-        return view('livewire.settings.addData', [
-            'faculties' => $this->faculties,
-            // 'categories' => $this->categories,
-        ]);
+        return view('livewire.settings.addData');
     }
 }
