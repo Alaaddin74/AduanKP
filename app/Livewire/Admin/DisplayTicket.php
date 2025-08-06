@@ -12,7 +12,7 @@ class DisplayTicket extends Component
 {
     public $ticket;
     public $ticketId;
-    public $selectedAdminId;
+    public $selectedAdminId = '';
     public $admins;
     public $name, $no_hp, $email;
 
@@ -20,8 +20,9 @@ class DisplayTicket extends Component
     public function mount($ticketId)
     {
         $this->ticketId = $ticketId;
-        $this->loadTicket();
         $this->admins = User::where('role', 'admin')->get(); // Assuming you have a User model with a role field
+        //  $this->selectedAdminId = $this->admins->first()->id ?? null;
+         $this->loadTicket();
     }
 
     public function loadTicket()

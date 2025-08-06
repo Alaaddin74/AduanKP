@@ -91,7 +91,7 @@ class UmumController extends Controller
         ]);
 
         if ($ticket->email) {
-            \Mail::to($ticket->email)->send(new \App\Mail\TicketCreatedMail($ticket));
+            Mail::to($ticket->email)->send(new \App\Mail\TicketCreatedMail($ticket));
         }
 
         return redirect()->back()->with('success', 'Laporan berhasil dikirim. Nomor tiket Anda: #' . $ticket->ticket_number);

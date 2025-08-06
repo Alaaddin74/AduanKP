@@ -5,6 +5,7 @@ namespace App\Livewire\Admin;
 use App\Models\Faculty;
 use App\Models\Ticket;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Mail;
 use Livewire\Component;
 
 class EditTicket extends Component
@@ -45,7 +46,8 @@ class EditTicket extends Component
             'result' => $this->status,
             'finished_at' => now(),
         ]);
-
+        // dd($this->ticket->email);
+        Mail::to($this->ticket->email)->send(new \App\Mail\TicketSubmittedMail($this->ticket));
 
         session()->flash('success', 'Ticket updated successfully.');
     }

@@ -10,16 +10,16 @@ class TicketSubmittedMail extends Mailable
 {
     use Queueable, SerializesModels;
 
-    public $ticketNumber;
+    public $ticket;
 
-    public function __construct($ticketNumber)
+    public function __construct($ticket)
     {
-        $this->ticketNumber = $ticketNumber;
+        $this->ticket = $ticket;
     }
 
     public function build()
     {
         return $this->subject('Tiket Anda Telah Diterima')
-                    ->view('emails.ticket_submitted');
+                    ->view('emails.ticket_finished');
     }
 }

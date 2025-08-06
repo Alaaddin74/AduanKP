@@ -50,6 +50,8 @@
                         'User  Email' => $ticket->email ?? 'Not Available',
                         'User  Name' => $ticket->name ?? 'Pengguna Umum',
                         'Phone Number' => $ticket->no_hp ?? '-',
+                        'Link' => $ticket->site_link ?? 'Not Provided',
+                        'Description' => $ticket->description ?? 'No description provided',
                         // 'Ticket Date' => $ticket->created_at->format('d M Y'),
                     ] as $label => $value)
                         <div class="bg-gray-50 dark:bg-gray-800 p-2 rounded-lg">
@@ -58,25 +60,36 @@
                         </div>
                     @endforeach
                 </div>
-
-                <!-- Description -->
-                @if ($ticket->description)
-                    <div class="mb-4">
-                        <label class="block text-xs font-medium text-gray-700 dark:text-gray-300 mb-1">Description</label>
-                        <div class="bg-gray-50 dark:bg-gray-800 p-2 rounded-lg">
-                            <p class="text-gray-900 dark:text-gray-100 whitespace-pre-wrap">{{ $ticket->description }}</p>
-                        </div>
-                    </div>
+                @if ($ticket->attachment)
+                    @php
+                        $storagePath = asset('storage/' . $ticket->attachment);
+                        $publicPath = asset($ticket->attachment);
+                    @endphp
+                    <label class="text-sm text-gray-600 dark:text-gray-400 mt-4 block">Lampiran:</label>
+                    {{-- Try storage path first --}}
+                    @if (file_exists(public_path('storage/' . $ticket->attachment)))
+                        <a href="{{ $storagePath }}" target="_blank">
+                            <img src="{{ $storagePath }}" class="w-40 h-auto border rounded shadow mt-2"
+                                alt="Attachment Preview">
+                        </a>
+                    @elseif (file_exists(public_path($ticket->attachment)))
+                        <a href="{{ $publicPath }}" target="_blank">
+                            <img src="{{ $publicPath }}" class="w-40 h-auto border rounded shadow mt-2"
+                                alt="Attachment Preview">
+                        </a>
+                    @else
+                        <p class="text-sm text-red-500 mt-2">Attachment not found.</p>
+                    @endif
                 @endif
 
                 <!-- Assignment Actions -->
                 <div class="flex flex-col md:flex-row items-center justify-between w-full mt-4 gap-2">
                     <div class="w-full md:w-1/2">
                         <div class="relative">
-                            <flux:select wire:model.defer="selectedAdminId" label="Select Admin" placeholder="Select Admin">
-                                <flux:select.option value="">Select Admin</flux:select.option>
+                            <flux:select wire:model.defer="selectedAdminId" label="Select Admin" placeholder="{{ $ticket->assignment->assignedTo?->faculty ?? 'Select Admin' }}">
+                                {{-- <flux:select.option value="">Select Admin</flux:select.option> --}}
                                 @foreach ($admins as $admin)
-                                    <flux:select.option value="{{ $admin->id }}">{{ $admin->name }} ({{ $admin->email }})</flux:select.option>
+                                    <flux:select.option value="{{ $admin->id }}"> {{ $admin->faculty }}</flux:select.option>
                                 @endforeach
                             </flux:select>
 
