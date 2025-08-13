@@ -52,28 +52,52 @@ class UmumController extends Controller
             'email'       => 'nullable|email',
             'description' => 'required|string|max:1000',
             'lampiran'    => 'nullable|file|mimes:jpg,jpeg,png,pdf|max:2048',
-            'g-recaptcha-response' => ['required', function ($attribute, $value, $fail) {
-                $secret = env('NOCAPTCHA_SECRET');
-                $response = Http::asForm()->post('https://www.google.com/recaptcha/api/siteverify', [
-                    'secret' => $secret,
-                    'response' => $value,
-                    'remoteip' => request()->ip(),
-                ]);
-                if (!$response->json('success')) {
-                    $fail('Verifikasi CAPTCHA gagal. Silakan coba lagi.');
-                }
-            }],
+
+            // Ini captcha, gk bisa di lokal
+            // 'g-recaptcha-response' => ['required', function ($attribute, $value, $fail) {
+            //     $secret = env('NOCAPTCHA_SECRET');
+            //     $response = Http::asForm()->post('https://www.google.com/recaptcha/api/siteverify', [
+            //         'secret' => $secret,
+            //         'response' => $value,
+            //         'remoteip' => request()->ip(),
+            //     ]);
+            //     if (!$response->json('success')) {
+            //         $fail('Verifikasi CAPTCHA gagal. Silakan coba lagi.');
+            //     }
+            // }],
         ]);
 
         $facultyId = $request->faculty_id;
 
+        // Buat CPANEL
+
+        // $lampiranPath = null;
+        // if ($request->hasFile('lampiran') && $request->file('lampiran')->isValid()) {
+        // $file = $request->file('lampiran');
+        // $filename = time() . '_' . $file->getClientOriginalName();
+        // $destination = base_path('../public_html/attachments');
+        // $file->move($destination, $filename);
+        // $lampiranPath = 'attachments/' . $filename;
+        // }
+
         $lampiranPath = null;
+
         if ($request->hasFile('lampiran') && $request->file('lampiran')->isValid()) {
-        $file = $request->file('lampiran');
-        $filename = time() . '_' . $file->getClientOriginalName();
-        $destination = base_path('../public_html/attachments');
-        $file->move($destination, $filename);
-        $lampiranPath = 'attachments/' . $filename;
+            $file = $request->file('lampiran');
+            $filename = time() . '_' . $file->getClientOriginalName();
+
+            // Simpan di nama_project/public/attachments
+            $destination = public_path('attachments');
+
+            // Pastikan folder ada
+            if (!file_exists($destination)) {
+                mkdir($destination, 0777, true);
+            }
+
+            $file->move($destination, $filename);
+
+            // Path relatif untuk disimpan di database
+            $lampiranPath = 'attachments/' . $filename;
         }
 
         $ticket = Ticket::create([
@@ -90,9 +114,11 @@ class UmumController extends Controller
             'created_at'    => now()->setTimezone('Asia/Jakarta'),
         ]);
 
-        if ($ticket->email) {
-            \Mail::to($ticket->email)->send(new \App\Mail\TicketCreatedMail($ticket));
-        }
+        //Aktifkan klo mau dipake (di lokal gk bisa)
+
+        // if ($ticket->email) {
+        //     \Mail::to($ticket->email)->send(new \App\Mail\TicketCreatedMail($ticket));
+        // }
 
         return redirect()->back()->with('success', 'Laporan berhasil dikirim. Nomor tiket Anda: #' . $ticket->ticket_number);
     }

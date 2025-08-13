@@ -367,13 +367,13 @@
           <div class="preview">Preview Gambar</div>
         </div>
         
-        <div class="mb-3">
+        <!-- <div class="mb-3">
           <script src="https://www.google.com/recaptcha/api.js" async defer></script>
           <div class="g-recaptcha" data-sitekey="{{ env('NOCAPTCHA_SITEKEY') }}"></div>
           @if ($errors->has('g-recaptcha-response'))
          <span class="text-danger">{{ $errors->first('g-recaptcha-response') }}</span>
           @endif
-        </div>
+        </div> -->
             <button type="reset" class="btn btn-secondary me-2">Reset</button>
             <button type="submit" class="btn-submit btn">Lapor!</button>
           </div>
