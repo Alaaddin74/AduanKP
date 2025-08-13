@@ -3,20 +3,20 @@
     <div class="p-6 bg-blue-50 dark:bg-blue-950 shadow rounded-2xl border border-blue-200 dark:border-blue-700">
     <div class="flex flex-wrap items-center gap-4">
         <!-- 🔍 Search Input -->
-        <div class="flex-1 min-w-[250px]">
+        {{-- <div class="flex-1 min-w-[250px]">
             <input type="text" wire:model.debounce.300ms="search" placeholder="🔍 Search ticket number or user"
                 class="w-full px-4 py-2 text-sm rounded-xl bg-white dark:bg-blue-900 border border-blue-300 dark:border-blue-600 placeholder:text-blue-400 dark:placeholder:text-blue-300 text-blue-900 dark:text-white focus:ring-2 focus:ring-blue-500 focus:outline-none transition-all duration-200 shadow-sm" />
-        </div>
+        </div> --}}
 
         <!-- 🗂 Status Filter -->
         <div class="min-w-[180px]">
             <select wire:model="statusFilter"
                 class="w-full px-4 py-2 text-sm rounded-xl bg-white dark:bg-blue-900 border border-blue-300 dark:border-blue-600 text-blue-900 dark:text-white focus:ring-2 focus:ring-blue-500 focus:outline-none shadow-sm">
-                <option value="">🗂 All Statuses</option>
-                <option value="submitted">📩 Submitted</option>
-                <option value="in_progress">⏳ In Progress</option>
-                <option value="done">✅ Done</option>
-                <option value="rejected">❌ Rejected</option>
+                <option value=""> All Statuses</option>
+                <option value="submitted"> Submitted</option>
+                <option value="in_progress"> In Progress</option>
+                <option value="done"> Done</option>
+                <option value="rejected"> Rejected</option>
             </select>
         </div>
 
@@ -24,7 +24,7 @@
         <div class="min-w-[180px]">
             <select wire:model="facultyFilter"
                 class="w-full px-4 py-2 text-sm rounded-xl bg-white dark:bg-blue-900 border border-blue-300 dark:border-blue-600 text-blue-900 dark:text-white focus:ring-2 focus:ring-blue-500 focus:outline-none shadow-sm">
-                <option value="">🏫 All Occupations</option>
+                <option value="">All Occupations</option>
                 @foreach ($faculties as $faculty)
                     <option value="{{ $faculty->id }}">{{ $faculty->name }}</option>
                 @endforeach
@@ -54,7 +54,7 @@
         <div class="overflow-x-auto">
             <table class="min-w-full divide-y divide-gray-200 dark:divide-gray-700 text-sm">
                 <!-- Table Header -->
-                <thead class="bg-blue-100 dark:bg-blue-800 text-blue-600 dark:text-white sticky top-0 z-10">
+                <thead class="bg-blue-100 dark:bg-blue-800 text-blue-600 dark:text-gray-300 sticky top-0 z-10">
                     <tr>
                         @foreach (['Ticket #', 'User', 'Occupation'] as $label)
                             <th class="px-4 py-3 text-left font-semibold uppercase tracking-wider">

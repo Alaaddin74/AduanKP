@@ -8,7 +8,7 @@
         <div class="my-6 w-full space-y-6">
             {{-- Occupation Dropdown --}}
             <flux:select wire:model.live="selectedFacultyId" label="Select Occupation" >
-                <flux:select.option value="">Select Occupation</flux:select.option>
+                <flux:select.option value="">Select Occupation to edit</flux:select.option>
                 @foreach ($faculties as $faculty)
                     <flux:select.option value="{{ $faculty->id }}">{{ $faculty->name }}</flux:select.option>
                 @endforeach
@@ -45,7 +45,7 @@
         <div class="my-6 w-full space-y-6">
             {{-- Category Dropdown --}}
             <flux:select wire:model.live="selectedCategoryId" label="Select Category" placeholder="Choose a category">
-                <flux:select.option value="">Select Category</flux:select.option>
+                <flux:select.option value="">Select Category to edit</flux:select.option>
                 @foreach ($categories as $category)
                     <flux:select.option value="{{ $category->id }}">{{ $category->name }}</flux:select.option>
                 @endforeach

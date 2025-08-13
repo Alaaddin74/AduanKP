@@ -22,8 +22,8 @@
         </flux:field>
 
         <!-- Faculty -->
-        <flux:select wire:model.defer="faculty_id" label="Faculty" placeholder="Select Faculty">
-            <flux:select.option value="">Select Faculty</flux:select.option>
+        <flux:select wire:model.defer="faculty_id" label="Status" placeholder="Select Status">
+            <flux:select.option value="">Select status</flux:select.option>
             @foreach ($faculties as $faculty)
                 <flux:select.option value="{{ $faculty->id }}">{{ $faculty->name }}</flux:select.option>
             @endforeach

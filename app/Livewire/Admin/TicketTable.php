@@ -81,7 +81,6 @@ class TicketTable extends Component
         if ($this->search) {
             $query->where(function ($q) {
                 $q->where('ticket_number', 'like', '%' . $this->search . '%')
-                  ->orWhere('category', 'like', '%' . $this->search . '%')
                   ->orWhere('description', 'like', '%' . $this->search . '%')
                   ->orWhereHas('user', function ($userQuery) {
                       $userQuery->where('name', 'like', '%' . $this->search . '%')

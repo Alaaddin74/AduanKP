@@ -9,6 +9,7 @@ use App\Livewire\Admin\DisplayTicket;
 use App\Livewire\Admin\EditTicket;
 use App\Livewire\Admin\TicketCreate;
 use App\Livewire\Settings\AddData;
+use App\Livewire\Settings\assignFakultas;
 
 Route::get('/', function () {
     return view('welcome');
@@ -25,6 +26,9 @@ Route::get('addTicket', TicketCreate::class)
     ->middleware(['auth', 'verified'])
     ->name('create.index');
 
+Route::get('/faculty', assignFakultas::class)->middleware('auth');
+
+
 Route::middleware(['auth'])->group(function () {
 
     Route::get('/admin/tickets/{ticket}/edit', EditTicket::class)->name('admin.tickets.edit');
@@ -37,6 +41,8 @@ Route::middleware(['auth'])->group(function () {
     Route::get('settings/password', Password::class)->name('settings.password');
     Route::get('settings/appearance', Appearance::class)->name('settings.appearance');
     Route::get('settings/add_data', AddData::class)->name('settings.add_data');
+        Route::get('settings/assignFakultas', assignFakultas::class)->name('settings.assign_fakultas');
+
 });
 
 

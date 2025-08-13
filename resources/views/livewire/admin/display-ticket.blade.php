@@ -46,7 +46,7 @@
                     @foreach ([
                         'Ticket Number' => $ticket->ticket_number,
                         'Category' => $ticket->category->name,
-                        'Occupation' => $ticket->faculty ? $ticket->faculty->name : 'Not Specified',
+                        'Status' => $ticket->faculty ? $ticket->faculty->name : 'Not Specified',
                         'User  Email' => $ticket->email ?? 'Not Available',
                         'User  Name' => $ticket->name ?? 'Pengguna Umum',
                         'Phone Number' => $ticket->no_hp ?? '-',
@@ -97,7 +97,7 @@
                     </div>
 
                     <div class="flex gap-2 mt-2 md:mt-0">
-                        <flux:button wire:click="assignToAdmin" variant="primary" color="emerald">
+                        <flux:button wire:click="assignToAdmin" variant="primary" color="blue">
                             Assign
                         </flux:button>
                     </div>
@@ -121,21 +121,21 @@
                     <div class="border-t border-gray-200 dark:border-gray-700 pt-4 mt-4">
                         <h3 class="text-lg font-semibold text-gray-900 dark:text-gray-100 mb-4">Assignment Information</h3>
                         <div class="grid grid-cols-2 gap-4">
-                            <div class="bg-blue-50 dark:bg-blue-900 p-2 rounded-lg">
+                            <div class="bg-blue-50 dark:bg-gray-800 p-2 rounded-lg">
                                 <label class="block text-xs font-medium text-gray-700 dark:text-gray-300 mb-1">Assigned To</label>
                                 <p class="text-sm font-semibold text-gray-900 dark:text-white">
                                     {{ $ticket->assignment->assignedTo?->name ?? 'Not Assigned' }}
                                 </p>
                             </div>
 
-                            <div class="bg-blue-50 dark:bg-blue-900 p-2 rounded-lg">
+                            <div class="bg-blue-50 dark:bg-gray-800 p-2 rounded-lg">
                                 <label class="block text-xs font-medium text-gray-700 dark:text-gray-300 mb-1">Assigned Date</label>
                                 <p class="text-sm font-semibold text-gray-900 dark:text-white">
                                     {{ $ticket->assignment->assigned_at?->format('d M Y, H:i') ?? 'Not Set' }}
                                 </p>
                             </div>
 
-                            <div class="bg-blue-50 dark:bg-blue-900 p-2 rounded-lg">
+                            <div class="bg-blue-50 dark:bg-gray-800 p-2 rounded-lg">
                                 <label class="block text-xs font-medium text-gray-700 dark:text-gray-300 mb-1">Finished Date</label>
                                 <p class="text-sm font-semibold text-gray-900 dark:text-white">
                                     {{ $ticket->assignment->finished_at?->format('d M Y, H:i') ?? 'Not Finished' }}
@@ -145,7 +145,7 @@
                     </div>
                     <div class="mt-6 flex justify-end">
                                 <a href="{{ route('admin.tickets.edit', $ticket->id) }}"
-                                    class="bg-yellow-500 hover:bg-yellow-600 text-white px-4 py-2 rounded-lg transition">
+                                    class="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-lg transition">
                                     Edit Ticket
                                 </a>
                             </div>

@@ -10,7 +10,7 @@
                     ← Back to Ticket
                 </a>
 
-               
+
             </div>
         </div>
 
@@ -31,7 +31,7 @@
                 <label class="text-sm text-gray-600 dark:text-gray-400 mt-4 block">Email:</label>
                 <p class="text-lg text-gray-800 dark:text-gray-100">{{ $ticket->email ?? 'Not available' }}</p>
 
-                <label class="text-sm text-gray-600 dark:text-gray-400 mt-4 block">Occupation:</label>
+                <label class="text-sm text-gray-600 dark:text-gray-400 mt-4 block">Status:</label>
                 <p class="text-lg text-gray-800 dark:text-gray-100">{{ $ticket->faculty->name ?? '-' }}</p>
 
                 <label class="text-sm text-gray-600 dark:text-gray-400 mt-4 block">Link:</label>
@@ -83,7 +83,7 @@
                     class="w-full px-4 py-2 border rounded-md bg-gray-50 dark:bg-gray-800 text-gray-900 dark:text-gray-100"></textarea>
 
                 <button wire:click="save"
-                    class="mt-6 bg-indigo-600 hover:bg-indigo-700 text-white px-6 py-2 rounded-md transition-colors">
+                    class="mt-6 bg-blue-600 hover:bg-blue-700 text-white px-6 py-2 rounded-md transition-colors">
                     Submit
                 </button>
 

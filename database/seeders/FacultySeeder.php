@@ -15,14 +15,10 @@ class FacultySeeder extends Seeder
     {
         //
         $faculties = [
-            'MIPA',
-            'FIK',
-            'FEB',
-            'FISIP',
-            'FK',
-            'Hukum',
-            'Pascasarjana',
-            'Pengguna Umum'
+            'Mahasiswa',
+            'Dosen',
+            'Umum',
+            'Karyawan',
         ];
 
         foreach ($faculties as $name) {
