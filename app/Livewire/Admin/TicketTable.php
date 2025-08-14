@@ -4,6 +4,7 @@ namespace App\Livewire\Admin;
 
 use App\Models\Ticket;
 use App\Models\Faculty;
+use Illuminate\Support\Facades\DB;
 use Livewire\Component;
 use Livewire\WithPagination;
 
@@ -25,9 +26,24 @@ class TicketTable extends Component
     // Faculties for dropdown
     public $faculties = [];
 
+    public $rols = [];
+    public $rol;
+
     public function mount()
     {
+        $this->rols = $this->getEnumValues('users', 'faculty');
+
         $this->faculties = Faculty::all();
+    }
+
+    private function getEnumValues($table, $column)
+    {
+        $type = DB::select("SHOW COLUMNS FROM {$table} WHERE Field = ?", [$column])[0]->Type;
+        preg_match('/enum\((.*)\)$/', $type, $matches);
+
+        return array_map(function ($value) {
+            return trim($value, "'");
+        }, explode(',', $matches[1]));
     }
 
     public function applySearch()
@@ -39,7 +55,7 @@ class TicketTable extends Component
     public function updated($property)
     {
         // Reset pagination when filters change
-        if (in_array($property, ['search', 'statusFilter', 'facultyFilter'])) {
+        if (in_array($property, ['search', 'statusFilter', 'facultyFilter', 'rol'])) {
             $this->resetPage();
         }
     }
@@ -65,6 +81,7 @@ class TicketTable extends Component
         $this->searchInput = '';
         $this->statusFilter = '';
         $this->facultyFilter = '';
+        $this->rol = '';
         $this->resetPage();
     }
 
@@ -81,11 +98,11 @@ class TicketTable extends Component
         if ($this->search) {
             $query->where(function ($q) {
                 $q->where('ticket_number', 'like', '%' . $this->search . '%')
-                  ->orWhere('description', 'like', '%' . $this->search . '%')
-                  ->orWhereHas('user', function ($userQuery) {
-                      $userQuery->where('name', 'like', '%' . $this->search . '%')
-                               ->orWhere('email', 'like', '%' . $this->search . '%');
-                  });
+                    ->orWhere('description', 'like', '%' . $this->search . '%')
+                    ->orWhereHas('user', function ($userQuery) {
+                        $userQuery->where('name', 'like', '%' . $this->search . '%')
+                            ->orWhere('email', 'like', '%' . $this->search . '%');
+                    });
             });
         }
 
@@ -102,19 +119,26 @@ class TicketTable extends Component
         // Handle sorting
         if ($this->sortBy === 'assigned_to') {
             $query->leftJoin('ticket_assignments', 'tickets.id', '=', 'ticket_assignments.ticket_id')
-                  ->leftJoin('users as assigned_users', 'ticket_assignments.assigned_to', '=', 'assigned_users.id')
-                  ->select('tickets.*')
-                  ->orderBy('assigned_users.name', $this->sortDirection);
+                ->leftJoin('users as assigned_users', 'ticket_assignments.assigned_to', '=', 'assigned_users.id')
+                ->select('tickets.*')
+                ->orderBy('assigned_users.name', $this->sortDirection);
         } elseif ($this->sortBy === 'user') {
             $query->join('users', 'tickets.user_id', '=', 'users.id')
-                  ->select('tickets.*')
-                  ->orderBy('users.name', $this->sortDirection);
+                ->select('tickets.*')
+                ->orderBy('users.name', $this->sortDirection);
         } elseif ($this->sortBy === 'faculty') {
             $query->leftJoin('faculties', 'tickets.faculty_id', '=', 'faculties.id')
-                  ->select('tickets.*')
-                  ->orderBy('faculties.name', $this->sortDirection);
+                ->select('tickets.*')
+                ->orderBy('faculties.name', $this->sortDirection);
         } else {
             $query->orderBy($this->sortBy, $this->sortDirection);
+        }
+
+        // Apply assigned-to faculty filter
+        if ($this->rol) {
+            $query->whereHas('assignment.assignedTo', function ($q) {
+                $q->where('faculty', $this->rol);
+            });
         }
 
         return $query->paginate(10);
@@ -159,12 +183,12 @@ class TicketTable extends Component
         if ($this->search) {
             $baseQuery->where(function ($q) {
                 $q->where('ticket_number', 'like', '%' . $this->search . '%')
-                  ->orWhere('title', 'like', '%' . $this->search . '%')
-                  ->orWhere('description', 'like', '%' . $this->search . '%')
-                  ->orWhereHas('user', function ($userQuery) {
-                      $userQuery->where('name', 'like', '%' . $this->search . '%')
-                               ->orWhere('email', 'like', '%' . $this->search . '%');
-                  });
+                    ->orWhere('title', 'like', '%' . $this->search . '%')
+                    ->orWhere('description', 'like', '%' . $this->search . '%')
+                    ->orWhereHas('user', function ($userQuery) {
+                        $userQuery->where('name', 'like', '%' . $this->search . '%')
+                            ->orWhere('email', 'like', '%' . $this->search . '%');
+                    });
             });
         }
 
@@ -174,6 +198,11 @@ class TicketTable extends Component
 
         if ($this->facultyFilter) {
             $baseQuery->where('faculty_id', $this->facultyFilter);
+        }
+        if ($this->rol) {
+            $baseQuery->whereHas('assignment.assignedTo', function ($q) {
+                $q->where('faculty', $this->rol);
+            });
         }
 
         return [

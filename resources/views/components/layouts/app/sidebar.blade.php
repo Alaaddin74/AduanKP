@@ -9,7 +9,9 @@
     <flux:sidebar sticky stashable
         class="border-e border-blue-200 bg-blue-900 !text-white dark:border-zinc-700 dark:bg-blue-900">
         <flux:sidebar.toggle class="lg:hidden" icon="x-mark" />
-
+        {{-- <div class="flex items-center justify-center mb-4">
+            <img src="{{ asset('build/assets/Logo.png') }}" alt="logo" class="h-12 w-12 object-contain">
+        </div> --}}
         <a href="{{ route('dashboard') }}" class="me-5 flex items-center space-x-2 rtl:space-x-reverse" wire:navigate>
             <x-app-logo />
         </a>

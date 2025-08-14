@@ -3,7 +3,7 @@
     <!-- Welcome Header -->
     <div class="pb-2 border-b border-gray-200 dark:border-gray-700">
         <h1 class="text-2xl font-bold text-gray-800 dark:text-gray-100">Dashboard</h1>
-        <p class="text-gray-600 dark:text-gray-400">Here's what's happening with the tickets</p>
+        <p class="text-gray-600 dark:text-gray-400"></p>
     </div>
 
     <!-- Section: Ticket Overview -->

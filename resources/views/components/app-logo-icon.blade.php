@@ -1,1 +1,1 @@
-<img src="{{asset('build/assets/logo.jpeg')}}" alt="logo">
+<img src="{{asset('build/assets/Logo.png')}}" alt="logo"  class="h-auto w-auto object-contain">

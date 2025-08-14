@@ -1,5 +1,5 @@
 <div class="max-w-3xl mx-auto p-6 bg-white dark:bg-gray-900 rounded-xl shadow-lg">
-    <h2 class="text-3xl font-bold text-gray-900 dark:text-white mb-6">📝 Submit a New Ticket</h2>
+    <h2 class="text-3xl font-bold text-gray-900 dark:text-white mb-6">Formulir Laporan</h2>
 
     @if (session()->has('success'))
         <div class="bg-green-100 border border-green-400 text-green-800 px-4 py-2 rounded mb-4">
@@ -49,7 +49,7 @@
 
 
         <!-- Category -->
-        <flux:select wire:model.defer="category" label="Category" placeholder="Select a category">
+        <flux:select wire:model.defer="category" label="Kategori" placeholder="Select a category">
             <flux:select.option value=""> Select a Category </flux:select.option>
             @foreach ($categories as $value => $label)
                 <flux:select.option value="{{ $value }}">{{ $label }}</flux:select.option>
@@ -66,14 +66,14 @@
         <!-- Site Link -->
 
         <div>
-            <flux:input wire:model.defer="site_link" type="url" label="Site Link" placeholder="Enter Link" />
+            <flux:input wire:model.defer="site_link" type="url" label="Link Situs" placeholder="Enter Link" />
             @error('site_link')
                 <span class="text-sm text-red-500">{{ $message }}</span>
             @enderror
         </div>
         <!-- Description -->
         <div>
-            <flux:textarea wire:model.defer="description" label="Describe the issue" rows="4" />
+            <flux:textarea wire:model.defer="description" label="Catatan" rows="4" />
             @error('description')
                 <span class="text-sm text-red-500">{{ $message }}</span>
             @enderror

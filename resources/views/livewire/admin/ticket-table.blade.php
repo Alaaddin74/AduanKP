@@ -31,6 +31,17 @@
             </select>
         </div>
 
+        <!-- 🏫 rol Filter -->
+        <div class="min-w-[180px]">
+            <select wire:model="rol"
+                class="w-full px-4 py-2 text-sm rounded-xl bg-white dark:bg-blue-900 border border-blue-300 dark:border-blue-600 text-blue-900 dark:text-white focus:ring-2 focus:ring-blue-500 focus:outline-none shadow-sm">
+                <option value="">Fakultas</option>
+                @foreach ($rols as $rol)
+                    <option value="{{ $rol }}">{{ $rol }}</option>
+                @endforeach
+            </select>
+        </div>
+
         <!-- 🧠 Advanced Search -->
         <div class="flex items-center gap-2 min-w-[250px]">
             <input type="text" wire:model.defer="searchInput" placeholder="🔎 Advanced search"
@@ -102,9 +113,9 @@
                                     <div class="flex items-center gap-2">
                                         <div
                                             class="h-8 w-8 rounded-full bg-indigo-200 dark:bg-indigo-900 flex items-center justify-center text-xs font-bold text-indigo-900 dark:text-white">
-                                            {{ substr($ticket->assignment->assignedTo->name, 0, 2) }}
+                                            {{ substr($ticket->assignment->assignedTo->faculty, 0, 2) }}
                                         </div>
-                                        <span>{{ $ticket->assignment->assignedTo->name }}</span>
+                                        <span>{{ $ticket->assignment->assignedTo->faculty }}</span>
                                     </div>
                                 @else
                                     <span

@@ -6,6 +6,7 @@ use App\Models\Category;
 use App\Models\Faculty;
 use App\Models\Ticket;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Mail;
 use Livewire\Attributes\Validate;
 use Livewire\Component;
 use Livewire\Features\SupportFileUploads\WithFileUploads;
@@ -26,6 +27,8 @@ class TicketCreate extends Component
     public $description;
     public $faculties;
     public $categories;
+
+    public Ticket $ticket;
 
     public function mount()
     {
@@ -64,6 +67,9 @@ class TicketCreate extends Component
             'description' => $this->description,
             'status' => 'submitted',
         ]);
+
+        // Send confirmation email
+        // Mail::to($this->ticket->email)->send(new \App\Mail\TicketCreatedMail($this->ticket));
 
         session()->flash('success', 'Ticket submitted successfully!');
         return redirect()->route('tickets.index');

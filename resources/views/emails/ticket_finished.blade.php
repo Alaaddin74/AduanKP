@@ -5,12 +5,23 @@
     <title>Nomor Tiket Aduan</title>
 </head>
 <body>
-    <p>Halo {{ $ticket->name }},</p>
-    <p>Bisa cek ticket. Berikut nomor tiket Anda:</p>
-    <h2>#{{ $ticket->ticket_number }}</h2>
-    <p>Silakan simpan nomor ini untuk memantau status laporan Anda.</p>
-    <br>
-    <p>Terima kasih,</p>
-    <p>UPT TIK Universitas Lampung</p>
+ <p>Yth. {{ $ticket->name }},</p>
+
+<p>Terima kasih telah menghubungi UPT TIK Universitas Lampung.</p>
+
+<p>Dengan ini kami informasikan bahwa tiket Anda telah <strong>selesai diproses</strong>.</p>
+
+<p>Nomor tiket Anda:</p>
+<h2>#{{ $ticket->ticket_number }}</h2>
+
+<p>Silakan simpan nomor ini sebagai referensi apabila Anda memerlukan informasi lebih lanjut terkait laporan yang telah diajukan.</p>
+
+<br>
+<p>Apabila masih terdapat hal yang ingin ditanyakan atau permasalahan serupa muncul kembali, jangan ragu untuk menghubungi kami melalui kanal layanan resmi UPT TIK.</p>
+
+<br>
+<p>Hormat kami,</p>
+<p><strong>UPT TIK Universitas Lampung</strong></p>
+
 </body>
 </html>
